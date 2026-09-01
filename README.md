@@ -1,47 +1,46 @@
-# NSBM EventHub — Restructured (Frontend / Backend)
+# NSBM EventHub — Frontend / Backend Split
 
-This is the original NSBM Event Planning & Scheduling System, reorganized into
-two top-level folders so the static site and the server-side logic are kept
-separate.
+This version separates the original project into two clear parts:
 
-## Structure
-
-```
-frontend/           Static pages & assets (no server logic)
-  index.html
-  auth/              login.html, register.html, logout.html
-  admin/             admin-facing HTML pages (dashboard, events, categories, etc.)
-  student/           student-facing HTML pages (dashboard, browse events, schedule, etc.)
-  assets/            css/, js/ (Bootstrap-style custom.css, GSAP/Lenis animations)
-
-backend/             PHP application logic & database
-  admin/             announcements_manage.php (admin CRUD logic)
-  student/           announcements_view.php
-  student_events/    essentials/ (header.php, footer.php), pages/ (event_browse.php, event_details.php)
-  database/          db_connect.php, eventsdb_connect.php, eventsdb_init.php, install.php, eventhub.sql
-  includes/          db_connect.php, functions.php, session_check.php, header.php, footer.php
+```text
+NSBM-EventHub-Split/
+├── frontend/        # ONLY HTML, CSS, JavaScript and frontend assets
+│   ├── admin/
+│   ├── student/
+│   ├── assets/
+│   ├── index.html
+│   ├── login.html
+│   └── register.html
+└── backend/         # ONLY PHP API, database connection, installer and SQL
+    ├── api.php
+    ├── db.php
+    ├── config.php
+    ├── helpers.php
+    ├── install.php
+    └── eventhub.sql
 ```
 
-## One thing I changed, and why
+## Setup
+1. Install XAMPP/WAMP/Laragon with Apache, PHP and MySQL/MariaDB.
+2. Put this whole folder inside the web server document root (for example `htdocs`).
+3. Edit `backend/config.php` if your MySQL username/password/database host differs from the defaults.
+4. Start Apache and MySQL.
+5. Open `http://localhost/NSBM-EventHub-Split/backend/install.php` once, or import `backend/eventhub.sql` using phpMyAdmin.
+6. Open `http://localhost/NSBM-EventHub-Split/frontend/index.html`. Do **not** open the HTML with `file://`, because the browser needs the PHP API over HTTP.
 
-In the original project, `includes/db_connect.html`, `functions.html`,
-`session_check.html`, `header.html`, and `footer.html` all contain **PHP
-code** (they open with `<?php ... ?>`) but were saved with an `.html`
-extension — one even has the comment `<!--Dulneth, create this in php-->`.
-Meanwhile the real backend pages (e.g. `admin/announcements_manage.php`)
-already do `require_once '../includes/db_connect.php'`, expecting a `.php`
-file that didn't exist in the original zip.
+## Demo accounts
+- Admin: `admin@nsbm.ac.lk` / `admin123`
+- Student: `kamal@student.nsbm.ac.lk` / `student123`
 
-So when moving these into `backend/includes/`, I renamed them from `.html`
-to `.php` to match what the code already expects. This is the only content
-change — everything else was moved, not edited.
+## What was changed
+- Removed PHP from frontend files; frontend is now static HTML + JS.
+- Moved all database/session/business logic into `backend/api.php` and backend helper files.
+- Added session-based authentication through the PHP API.
+- Converted admin CRUD, student registration/cancellation, schedules, announcements and participant lists to API calls.
+- Added atomic seat-capacity checking to reduce overbooking.
+- Fixed the original invalid PHP/HTML connection files and broken relative paths.
+- Replaced invalid seed password hashes with valid PHP hashes for the demo accounts.
+- Kept the Bootstrap-based EventHub styling and responsive layout.
 
-## Note
-
-The project mixes two overlapping implementations of some pages (e.g. static
-`admin/announcements_manage.html` mockup vs. the working
-`admin/announcements_manage.php`, and `student/events_browse.html` vs.
-`student_events/pages/event_browse.php`). I kept both, split by type
-(HTML → frontend, PHP → backend) rather than merging or deleting either,
-since I didn't want to guess which one you intend to keep as the source of
-truth.
+## API examples
+The frontend calls endpoints such as `backend/api.php?action=login`, `events`, `registration`, `schedule`, `categories`, `announcements`, and `participants`.
