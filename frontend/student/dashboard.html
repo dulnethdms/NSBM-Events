@@ -1,0 +1,168 @@
+<!--for student profile changes-->
+<!--Hirun, create a db to store student info-->
+
+
+
+<?php
+/**
+ * NSBM EventHub - Student Dashboard
+ */
+require_once '../includes/db_connect.php';
+require_once '../includes/functions.php';
+require_once '../includes/session_check.php';
+
+require_role('student');
+
+$student_id = $_SESSION['user_id'];
+$page_title = "Student Dashboard";
+
+try {
+    // Registered count for this student
+    $stmt_reg = $pdo->prepare("SELECT COUNT(*) FROM registrations WHERE student_id = ?");
+    $stmt_reg->execute([$student_id]);
+    $my_registrations_count = (int)$stmt_reg->fetchColumn();
+
+    // Fetch upcoming registered events count
+    $stmt_up = $pdo->prepare("
+        SELECT COUNT(*) 
+        FROM registrations r 
+        JOIN events e ON r.event_id = e.id 
+        WHERE r.student_id = ? AND e.event_date >= CURDATE()
+    ");
+    $stmt_up->execute([$student_id]);
+    $upcoming_registered_count = (int)$stmt_up->fetchColumn();
+
+    // Fetch total active campus events
+    $total_campus_events = $pdo->query("SELECT COUNT(*) FROM events WHERE status = 'Upcoming'")->fetchColumn();
+
+    // Fetch next 3 upcoming campus events
+    $stmt_featured = $pdo->query("
+        SELECT e.*, c.name AS category_name 
+        FROM events e 
+        JOIN categories c ON e.category_id = c.id 
+        WHERE e.status = 'Upcoming' AND e.event_date >= CURDATE()
+        ORDER BY e.event_date ASC 
+        LIMIT 3
+    ");
+    $featured_events = $stmt_featured->fetchAll();
+
+} catch (PDOException $e) {
+    die("Database error loading student dashboard: " . $e->getMessage());
+}
+
+require_once '../includes/header.php';
+?>
+
+<div class="hero-gradient p-4 p-md-5 mb-4 shadow">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-3 py-1 rounded-pill mb-2">Student Portal</span>
+            <h2 class="fw-bold mb-2">Hello, <?php echo htmlspecialchars($_SESSION['user_name']); ?>! 👋</h2>
+            <p class="lead opacity-90 mb-0">Explore campus events, manage your personal schedule, and reserve your seats early.</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <a href="events_browse.php" class="btn btn-nsbm btn-lg px-4 shadow-sm rounded-pill">
+                <i class="bi bi-compass me-1"></i> Browse Events
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Row -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="glass-card p-3 stat-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase">My Registered Events</span>
+                    <h3 class="fw-bold mb-0 text-dark"><?php echo $my_registrations_count; ?></h3>
+                </div>
+                <div class="stat-icon">
+                    <i class="bi bi-calendar-check"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="glass-card p-3 stat-card" style="border-left-color: #3b82f6;">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase">Upcoming in My Timetable</span>
+                    <h3 class="fw-bold mb-0 text-dark"><?php echo $upcoming_registered_count; ?></h3>
+                </div>
+                <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="glass-card p-3 stat-card" style="border-left-color: #f59e0b;">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase">Open Campus Events</span>
+                    <h3 class="fw-bold mb-0 text-dark"><?php echo $total_campus_events; ?></h3>
+                </div>
+                <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                    <i class="bi bi-stars"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Events Grid -->
+<div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold mb-0"><i class="bi bi-fire text-danger me-2"></i>Upcoming Campus Highlights</h4>
+        <a href="events_browse.php" class="btn btn-sm btn-outline-secondary rounded-pill">View All Events</a>
+    </div>
+
+    <?php if (empty($featured_events)): ?>
+        <div class="glass-card p-4 text-center text-muted">
+            <i class="bi bi-calendar-x display-6 mb-2"></i>
+            <p class="mb-0">No upcoming events scheduled at the moment.</p>
+        </div>
+    <?php else: ?>
+        <div class="row g-4">
+            <?php foreach ($featured_events as $evt): 
+                $reg_count = get_event_registration_count($pdo, $evt['id']);
+                $is_registered = is_student_registered($pdo, $evt['id'], $student_id);
+                $is_full = ($reg_count >= $evt['capacity']);
+            ?>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25"><?php echo htmlspecialchars($evt['category_name']); ?></span>
+                            <?php if ($is_registered): ?>
+                                <span class="badge bg-primary rounded-pill"><i class="bi bi-check-circle me-1"></i> Registered</span>
+                            <?php elseif ($is_full): ?>
+                                <span class="badge bg-danger rounded-pill">Full Capacity</span>
+                            <?php endif; ?>
+                        </div>
+
+                        <h5 class="fw-bold mb-2 text-dark"><?php echo htmlspecialchars($evt['title']); ?></h5>
+                        <p class="small text-muted mb-3 flex-grow-1 text-truncate-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            <?php echo htmlspecialchars($evt['description']); ?>
+                        </p>
+
+                        <div class="border-top pt-3 mt-auto">
+                            <div class="d-flex justify-content-between small text-muted mb-2">
+                                <span><i class="bi bi-calendar3 me-1"></i><?php echo date('M d, Y', strtotime($evt['event_date'])); ?></span>
+                                <span><i class="bi bi-clock me-1"></i><?php echo date('h:i A', strtotime($evt['event_time'])); ?></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small text-muted"><i class="bi bi-person me-1"></i><?php echo $reg_count; ?>/<?php echo $evt['capacity']; ?> Seats</span>
+                                <a href="event_details.php?id=<?php echo $evt['id']; ?>" class="btn btn-sm btn-nsbm-outline">
+                                    Details <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php require_once '../includes/footer.php'; ?>
