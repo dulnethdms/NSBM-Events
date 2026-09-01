@@ -1,0 +1,152 @@
+<?php
+// public landing page - no login needed to view this one
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to NSBM EventHub</title>
+
+  <link rel="stylesheet" href="assets/css/custom.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<section class="navsec">
+<nav class="navbar-nsbm">
+  <div class="container">
+    <a class="navbar-brand" href="index.php">
+      <span>NSBM EventHub</span>
+    </a>
+    <div class="nav-actions">
+      <a class="btn" href="auth/login.php">
+        <i class="bi bi-box-arrow-in-right"></i> Login
+      </a>
+      <a class="btn" href="auth/register.php">
+        <i class="bi bi-person-plus"></i> Register
+      </a>
+      <a class="btn" href="student/events_browse.php">
+        <i class="bi bi-compass"></i> Browse Events
+      </a>
+    </div>
+  </div>
+</nav>
+</section>
+
+<!-- Full-bleed photo swap on scroll, handled in main.js -->
+<section class="photo-section">
+  <div class="photo-wrapper">
+    <img src="https://students.nsbm.ac.lk/_next/image?url=%2Fhome2%2FFront-Globe.jpg&w=3840&q=75" alt="First photo" class="photo base-photo">
+    <img src="https://media.licdn.com/dms/image/v2/C561BAQEOoczaGxpdNg/company-background_10000/company-background_10000/0/1628311829240/human_resource_circle_of_nsbm_green_university_cover?e=2147483647&v=beta&t=lTFSwYGtxTxqdjSKT9gQqSd5BybpeKxa0beuTa-MaV0" alt="Second photo" class="photo overlay-photo">
+  </div>
+</section>
+
+<!-- Main Wrapper -->
+<main class="main-wrapper">
+  <div class="container">
+
+    <!-- Hero Section -->
+    <section class="herosec">
+      <div class="hero-section">
+        <div class="hero-text">
+          <h1>Discover, Schedule &amp; Attend Campus Events</h1>
+          <p>NSBM EventHub connects students with faculty workshops, sports championships, hackathons, and cultural festivals. Reserve seats in real-time!</p>
+          <div class="hero-actions">
+            <a href="student/events_browse.php" class="btn">Browse Events</a>
+            <a href="auth/login.php" class="btn">Login / Register</a>
+          </div>
+        </div>
+
+        <!--<div class="hero-box">
+          <i class="bi bi-calendar-week hero-box-icon"></i>
+          <h4>Seamless Seat Reservations</h4>
+          <p>Automatic seat tracking prevents double-booking and ensures fair access to all events.</p>
+        </div>-->
+      </div>
+    </section>
+
+    <!-- Browse Events preview cards - just a teaser, the real listing is student/events_browse.php -->
+    <section class="browse-events">
+      <div class="section-header">
+        <h2>Browse Campus Events</h2>
+        <p class="text-muted small">Explore upcoming workshops, sports events, and cultural festivals</p>
+      </div>
+      <div class="event-cards">
+        <div class="event-card">
+          <img src="https://students.nsbm.ac.lk/_next/image?url=%2Fhome2%2FFront-Globe.jpg&w=3840&q=75" alt="Event 1">
+          <div class="event-card-body">
+            <h5 class="event-card-title">NSBM Hackathon 2026</h5>
+            <p class="event-card-text">Join the annual coding marathon and showcase your programming skills. Compete for prizes and recognition!</p>
+            <a href="student/events_browse.php" class="btn">Browse Events</a>
+          </div>
+        </div>
+        <div class="event-card">
+          <img src="https://media.licdn.com/dms/image/v2/C561BAQEOoczaGxpdNg/company-background_10000/company-background_10000/0/1628311829240/human_resource_circle_of_nsbm_green_university_cover?e=2147483647&v=beta&t=lTFSwYGtxTxqdjSKT9gQqSd5BybpeKxa0beuTa-MaV0" alt="Event 2">
+          <div class="event-card-body">
+            <h5 class="event-card-title">Sports Championship 2026</h5>
+            <p class="event-card-text">Cheer for your favorite teams in the inter-college sports championship. Reserve your seats for the finals now!</p>
+            <a href="student/events_browse.php" class="btn">Browse Events</a>
+          </div>
+        </div>
+        <div class="event-card">
+          <img src="https://students.nsbm.ac.lk/_next/image?url=%2Fhome2%2FFront-Globe.jpg&w=3840&q=75" alt="Event 3">
+          <div class="event-card-body">
+            <h5 class="event-card-title">Cultural Festival 2026</h5>
+            <p class="event-card-text">Experience the vibrant cultural festival with music, dance, and food from around the world. Reserve your spot today!</p>
+            <a href="student/events_browse.php" class="btn">Browse Events</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="see-all">
+      <a href="student/events_browse.php" class="btn">See All Events</a>
+    </div>
+
+    <!-- Features Grid -->
+    <section class="panel-container">
+      <div class="panel">
+        <i class="bi bi-ticket-perforated panel-icon"></i>
+        <h5>Instant Event Signups</h5>
+        <p>Register for workshops or sports events with a single click. Capacity limits update live.</p>
+      </div>
+      <div class="panel">
+        <i class="bi bi-clock-history panel-icon"></i>
+        <h5>Personal Schedule</h5>
+        <p>Track your timetable under "My Schedule" so you never miss a session.</p>
+      </div>
+      <div class="panel">
+        <i class="bi bi-megaphone-fill panel-icon"></i>
+        <h5>Campus Announcements</h5>
+        <p>Stay informed with notices from administrators and event organizers.</p>
+      </div>
+    </section>
+
+    <!--
+    <section class="alert-info">
+      <i class="bi bi-info-circle-fill alert-icon"></i>
+      <div>
+        <h6>Learning Project - Demo Credentials:</h6>
+        <ul>
+          <li><strong>Admin:</strong> <code>admin@nsbm.ac.lk</code> / <code>admin123</code></li>
+          <li><strong>Student:</strong> <code>kamal@student.nsbm.ac.lk</code> / <code>student123</code></li>
+        </ul>
+      </div>
+    </section>
+    -->
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>NSBM EventHub &copy; 2026 NSBM Green University. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,654 @@
+/* =============================================
+   NSBM EventHub - Stylesheet (no framework)
+   ============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --nsbm-green: #22c55e;
+    --nsbm-green-soft: rgba(34, 197, 94, 0.12);
+    --nsbm-accent: #FF7A1A;      /* Orange for CTA */
+    --nsbm-navy: #0B3B2E;        /* Navbar dark green */
+    --bg-main: #0A0F14;
+    --bg-main-nav: #1d2a38;          /* Page background */
+    --card-bg: #1B222B;          /* Dark card background */
+    --text-primary: #F5F5F5;
+    --text-secondary: #FFD166;   /* Gold/yellow accent text */
+    --text-muted: #9CA6AF;
+    --border-soft: rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Reset ---------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+ul {
+    margin: 0;
+    padding-left: 1.1rem;
+}
+h1, h4, h5, h6 {
+    margin: 0;
+}
+
+/* ---------- Layout helpers ---------- */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+}
+.main-wrapper {
+    padding: 3rem 0;
+    flex: 1;
+}
+
+/* ---------- Navbar ---------- */
+.navsec {
+  position: fixed;       /* keeps it floating */
+  top: 20px;             /* small gap from top */
+  left: 50%;
+  transform: translateX(-50%); /* center horizontally */
+  width: 90%;            /* not full width, like a box */
+  max-width: 1200px;     /* limit size */
+  z-index: 1000;
+}
+
+.navbar-nsbm {
+  background-color: var(--bg-main-nav);
+  padding: 12px 20px;
+  border-radius: 30px;   /* rounded corners */    
+ 
+}
+
+.navbar-nsbm .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar-brand span {
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+}
+.nav-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+/*--------photo frame----------*/
+
+
+
+    .photo-section {
+      height: 160vh; /* enough scroll space */
+      position: relative;
+      margin-top:-1px;
+    }
+
+    .photo-wrapper {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .photo {
+      max-width: 100%;
+      border-radius: 12px;
+      position: absolute;
+    }
+
+    .base-photo {
+      z-index: 1;
+    }
+
+    .overlay-photo {
+    z-index: 2;
+    transform: scale(1); /* start normal size */
+    opacity: 0;          /* start hidden */
+    
+    }
+    
+ 
+
+
+
+
+
+
+
+
+
+/* ---------- Buttons ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 50px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s;
+    white-space: nowrap;
+    
+    color: var(--text-primary);
+    background: transparent;
+    background: var(--nsbm-accent);
+    color: #fff;
+    font-weight: 700;
+}
+
+.btn-lg {
+    padding: 14px 28px;
+    font-size: 1.05rem;
+}
+
+.btn-nsbm:hover {
+    background: #e65c00;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Hero Section ---------- */
+.hero-section {
+    display: flex;
+    margin-left: 150px;
+    margin-top: -500px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s ease-out forwards;
+}
+.herosec {
+    display: flex;
+    align-items: auto;
+    padding: 5px;
+    margin: 10px;
+    margin-bottom: 120px;
+}
+.herosec h1{
+    color: black;
+}
+.herosec p{
+    color: black;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
+
+
+/* ---------- Browse Events ---------- */
+
+/* Section container */
+.browse-events {
+  padding: 48px 16px; /* 3rem → 48px, 1rem → 16px */
+  
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 32px; /* 2rem → 32px */
+}
+
+.section-header h2 {
+  font-size: 32px; /* 2rem → 32px */
+  font-weight: 600;
+  color: #e3dddd;
+}
+
+.section-header p {
+  color: #ede7e7;
+  font-size: 15px; /* 0.95rem → ~15px */
+}
+
+/* Event cards grid */
+.event-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px; /* 1.5rem → 24px */
+}
+
+/* Individual card */
+.event-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.event-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Card body */
+.event-card-body {
+  padding: 16px; /* 1rem → 16px */
+}
+
+.event-card-title {
+  font-size: 19px; /* 1.2rem → ~19px */
+  font-weight: 600;
+  margin-bottom: 8px; /* 0.5rem → 8px */
+  color: #1a1a1a;
+}
+
+.event-card-text {
+  font-size: 15px; /* 0.95rem → ~15px */
+  color: #555;
+  margin-bottom: 16px; /* 1rem → 16px */
+  line-height: 1.4;
+}
+/* Wrapper to center the button */
+.see-all {
+  text-align: center;
+  margin-top: 12px; /* spacing above the button */
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Badge pill */
+.bade {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--nsbm-green-soft);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: var(--nsbm-green);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    margin-top:100px;
+}
+
+.hero-text h1 {
+    font-size: 3.25rem;
+    line-height: 1.15;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+.hero-text .lead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 0 2rem;
+    max-width: 42rem;
+}
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Right-hand feature card */
+.hero-box {
+    
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 80px;
+}
+.hero-box-icon {
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+.hero-box h4 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+}
+.hero-box p {
+    color: var(--text-muted);
+    line-height: 1.2;
+    margin: 0;
+}
+
+/* ---------- Feature Panels ---------- */
+.panel-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
+    
+}
+.panel {
+    flex: 1 1 280px;
+    text-align: left;
+}
+.panel-icon {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+.panel h5 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+.panel p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* ---------- Demo Credentials Alert ---------- */
+.alert-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+.alert-icon {
+    font-size: 1.75rem;
+    color: #38bdf8;
+    flex-shrink: 0;
+}
+.alert-info h6 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+.alert-info ul {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    list-style: disc;
+}
+.alert-info code {
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+/* ---------- Footer ---------- */
+footer {
+    background-color: var(--nsbm-navy);
+    color: #94a3b8;
+    text-align: center;
+    padding: 1.25rem 0;
+    margin-top: auto;
+}
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* =============================================
+   NSBM EventHub - Dashboard / Portal Theme
+   Shared by Admin & Student panels (header.php/footer.php layout)
+   ============================================= */
+
+/* ---------- Portal body background ---------- */
+body.portal-body {
+    background: var(--bg-main);
+}
+
+/* ---------- Sticky dashboard navbar (Bootstrap navbar-nsbm variant) ---------- */
+.navbar.navbar-nsbm {
+    background: linear-gradient(135deg, var(--nsbm-navy), var(--bg-main-nav));
+    border-bottom: 1px solid var(--border-soft);
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+.navbar.navbar-nsbm .nav-link {
+    color: rgba(245, 245, 245, 0.85);
+    font-weight: 600;
+    font-size: 0.92rem;
+}
+.navbar.navbar-nsbm .nav-link:hover,
+.navbar.navbar-nsbm .nav-link.active {
+    color: var(--text-secondary);
+}
+.navbar-brand-badge {
+    background: var(--nsbm-accent);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
+}
+.navbar.navbar-nsbm .navbar-brand span.fw-bold {
+    color: var(--text-primary);
+}
+.tracking-wide {
+    letter-spacing: 0.03em;
+}
+
+/* Theme toggle icon button (light/dark) in navbar */
+.theme-toggle-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-soft);
+    color: var(--text-primary);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+.theme-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+/* ---------- Portal main wrapper ---------- */
+.main-wrapper.py-4 {
+    background: var(--bg-main);
+    min-height: 70vh;
+}
+
+/* ---------- Glass Card (core portal container) ---------- */
+.glass-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    color: var(--text-primary);
+}
+.glass-card h2, .glass-card h3, .glass-card h4, .glass-card h5, .glass-card h6 {
+    color: var(--text-primary);
+}
+.glass-card .text-dark {
+    color: var(--text-primary) !important;
+}
+.glass-card .text-secondary {
+    color: var(--text-muted) !important;
+}
+.glass-card .bg-light {
+    background: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* ---------- Portal headings above cards ---------- */
+.main-wrapper h2.fw-bold,
+.main-wrapper h4.fw-bold {
+    color: var(--text-primary);
+}
+.fw-extrabold {
+    font-weight: 800 !important;
+}
+
+/* ---------- Hero gradient banner (student dashboard welcome) ---------- */
+.hero-gradient {
+    background: linear-gradient(120deg, var(--nsbm-navy) 0%, #145c46 55%, var(--nsbm-green) 150%);
+    border-radius: 18px;
+    color: #fff;
+}
+.hero-gradient .lead {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* ---------- Portal buttons ---------- */
+.btn-nsbm {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--nsbm-accent);
+    color: #fff !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 999px;
+}
+.btn-nsbm:hover {
+    background: #e65c00;
+    color: #fff;
+}
+.btn-nsbm-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    color: var(--nsbm-green) !important;
+    font-weight: 700;
+    border: 1.5px solid var(--nsbm-green);
+    border-radius: 999px;
+}
+.btn-nsbm-outline:hover {
+    background: var(--nsbm-green-soft);
+}
+
+/* ---------- Stat cards (dashboard metric tiles) ---------- */
+.stat-card {
+    border-left: 4px solid var(--nsbm-green);
+    border-radius: 12px;
+}
+.stat-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    background: var(--nsbm-green-soft);
+    color: var(--nsbm-green);
+    flex-shrink: 0;
+}
+
+/* ---------- Custom tables inside glass cards ---------- */
+.table-custom {
+    color: var(--text-primary);
+    border-color: var(--border-soft);
+    margin-bottom: 0;
+}
+.table-custom thead th {
+    border-bottom: 1px solid var(--border-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 0.75rem;
+}
+.table-custom td, .table-custom th {
+    border-color: var(--border-soft);
+    vertical-align: middle;
+}
+.table-custom tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+.text-xs {
+    font-size: 0.75rem;
+}
+
+/* ---------- Seat capacity progress bars ---------- */
+.progress-seat {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+.progress-seat .progress-bar {
+    border-radius: 999px;
+}
+
+/* ---------- Event / info cards inside glass-card grids ---------- */
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ---------- Auth pages (login/register) ---------- */
+.auth-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- Responsive ---------- */
+/*
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.25rem;
+    }
+    .hero-text h1 {
+        font-size: 2.25rem;
+    }
+    .hero-section {
+        padding: 1.5rem 0;
+    }
+    .navbar-nsbm .container {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    .alert-info {
+        flex-direction: column;
+    }
+} */

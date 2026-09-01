@@ -1,0 +1,302 @@
+<?php
+// Admin CRUD for events - add/edit/delete, all in one page depending
+// on the ?action= query param.
+require_once '../includes/db_connect.php';
+require_once '../includes/functions.php';
+require_once '../includes/session_check.php';
+
+require_role('admin');
+
+$page_title = "Manage Events";
+$errors = [];
+$edit_event = null;
+
+$action = $_GET['action'] ?? 'list';
+$id     = (int)($_GET['id'] ?? 0);
+
+// delete
+if ($action === 'delete' && $id > 0) {
+    try {
+        $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
+        $stmt->execute([$id]);
+        set_flash_message('success', 'Event deleted successfully.');
+        header("Location: events_manage.php");
+        exit();
+    } catch (PDOException $e) {
+        set_flash_message('danger', 'Failed to delete event: ' . $e->getMessage());
+        header("Location: events_manage.php");
+        exit();
+    }
+}
+
+// pull the event we're editing so the form can pre-fill
+if ($action === 'edit' && $id > 0) {
+    $stmt = $pdo->prepare("SELECT * FROM events WHERE id = ?");
+    $stmt->execute([$id]);
+    $edit_event = $stmt->fetch();
+    if (!$edit_event) {
+        set_flash_message('warning', 'Event not found.');
+        header("Location: events_manage.php");
+        exit();
+    }
+}
+
+// form was submitted - could be a new event or an edit, same handler
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $event_id    = (int)($_POST['event_id'] ?? 0);
+    $title       = sanitize($_POST['title'] ?? '');
+    $description = sanitize($_POST['description'] ?? '');
+    $category_id = (int)($_POST['category_id'] ?? 0);
+    $event_date  = $_POST['event_date'] ?? '';
+    $event_time  = $_POST['event_time'] ?? '';
+    $venue       = sanitize($_POST['venue'] ?? '');
+    $capacity    = (int)($_POST['capacity'] ?? 0);
+    $status      = sanitize($_POST['status'] ?? 'Upcoming');
+
+    // required fields / sanity checks
+    if (empty($title)) $errors[] = "Event title is required.";
+    if (empty($description)) $errors[] = "Description is required.";
+    if ($category_id <= 0) $errors[] = "Please select a category.";
+    if (empty($event_date)) $errors[] = "Event date is required.";
+    if (empty($event_time)) $errors[] = "Event time is required.";
+    if (empty($venue)) $errors[] = "Venue location is required.";
+    if ($capacity <= 0) $errors[] = "Capacity must be greater than zero.";
+    if (!in_array($status, ['Upcoming', 'Ongoing', 'Completed', 'Cancelled'])) $errors[] = "Invalid status selected.";
+
+    if (empty($errors)) {
+        try {
+            if ($event_id > 0) {
+                // editing an existing event
+                $stmt = $pdo->prepare("
+                    UPDATE events 
+                    SET title = ?, description = ?, category_id = ?, event_date = ?, event_time = ?, venue = ?, capacity = ?, status = ?
+                    WHERE id = ?
+                ");
+                $stmt->execute([$title, $description, $category_id, $event_date, $event_time, $venue, $capacity, $status, $event_id]);
+                set_flash_message('success', 'Event updated successfully.');
+            } else {
+                // brand new event
+                $stmt = $pdo->prepare("
+                    INSERT INTO events (title, description, category_id, event_date, event_time, venue, capacity, status, created_by)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ");
+                $stmt->execute([$title, $description, $category_id, $event_date, $event_time, $venue, $capacity, $status, $_SESSION['user_id']]);
+                set_flash_message('success', 'New event created successfully.');
+            }
+            header("Location: events_manage.php");
+            exit();
+        } catch (PDOException $e) {
+            $errors[] = "Database error: " . $e->getMessage();
+        }
+    }
+}
+
+// need these for the form + the listing table below
+try {
+    $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
+    
+    $stmt_events = $pdo->query("
+        SELECT e.*, c.name AS category_name 
+        FROM events e 
+        JOIN categories c ON e.category_id = c.id 
+        ORDER BY e.event_date DESC, e.event_time DESC
+    ");
+    $events = $stmt_events->fetchAll();
+} catch (PDOException $e) {
+    die("Database error: " . $e->getMessage());
+}
+
+require_once '../includes/header.php';
+?>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-calendar-event text-success me-2"></i>Manage Campus Events</h2>
+        <p class="text-muted small mb-0">Create, modify, and monitor event details & seating capacity</p>
+    </div>
+    <div>
+        <?php if ($action === 'add' || $action === 'edit'): ?>
+            <a href="events_manage.php" class="btn btn-outline-secondary rounded-pill">
+                <i class="bi bi-arrow-left me-1"></i> Back to All Events
+            </a>
+        <?php else: ?>
+            <a href="events_manage.php?action=add" class="btn btn-nsbm shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> Create New Event
+            </a>
+        <?php endif; ?>
+    </div>
+</div>
+
+<?php if ($action === 'add' || $action === 'edit'): ?>
+    <!-- CREATE / EDIT EVENT FORM -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="glass-card p-4 p-md-5">
+                <h4 class="fw-bold mb-4 text-dark">
+                    <i class="bi <?php echo $edit_event ? 'bi-pencil-square text-warning' : 'bi-plus-circle-fill text-success'; ?> me-2"></i>
+                    <?php echo $edit_event ? 'Edit Event: ' . htmlspecialchars($edit_event['title']) : 'Publish New Campus Event'; ?>
+                </h4>
+
+                <?php if (!empty($errors)): ?>
+                    <div class="alert alert-danger rounded-3 mb-4">
+                        <ul class="mb-0 small ps-3">
+                            <?php foreach ($errors as $err): ?>
+                                <li><?php echo htmlspecialchars($err); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
+                <form action="events_manage.php?action=<?php echo $action; ?><?php echo $edit_event ? '&id='.$edit_event['id'] : ''; ?>" method="POST" class="needs-validation" novalidate>
+                    <input type="hidden" name="event_id" value="<?php echo $edit_event['id'] ?? 0; ?>">
+
+                    <div class="row g-3 mb-3">
+                        <!-- Title -->
+                        <div class="col-md-8">
+                            <label for="title" class="form-label fw-semibold">Event Title</label>
+                            <input type="text" name="title" id="title" class="form-control" placeholder="e.g. NSBM AI & Robotics Expo" value="<?php echo htmlspecialchars($_POST['title'] ?? $edit_event['title'] ?? ''); ?>" required>
+                            <div class="invalid-feedback">Event title is required.</div>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="col-md-4">
+                            <label for="category_id" class="form-label fw-semibold">Category</label>
+                            <select name="category_id" id="category_id" class="form-select" required>
+                                <option value="">-- Select Category --</option>
+                                <?php foreach ($categories as $cat): ?>
+                                    <option value="<?php echo $cat['id']; ?>" <?php echo (($_POST['category_id'] ?? $edit_event['category_id'] ?? 0) == $cat['id']) ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($cat['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div class="invalid-feedback">Category selection is required.</div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label fw-semibold">Event Description</label>
+                        <textarea name="description" id="description" rows="4" class="form-control" placeholder="Detailed description of schedule, prerequisites, and agenda..." required><?php echo htmlspecialchars($_POST['description'] ?? $edit_event['description'] ?? ''); ?></textarea>
+                        <div class="invalid-feedback">Description is required.</div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <!-- Date -->
+                        <div class="col-md-4">
+                            <label for="event_date" class="form-label fw-semibold">Date</label>
+                            <input type="date" name="event_date" id="event_date" class="form-control" value="<?php echo htmlspecialchars($_POST['event_date'] ?? $edit_event['event_date'] ?? ''); ?>" required>
+                            <div class="invalid-feedback">Please select event date.</div>
+                        </div>
+
+                        <!-- Time -->
+                        <div class="col-md-4">
+                            <label for="event_time" class="form-label fw-semibold">Time</label>
+                            <input type="time" name="event_time" id="event_time" class="form-control" value="<?php echo htmlspecialchars($_POST['event_time'] ?? $edit_event['event_time'] ?? ''); ?>" required>
+                            <div class="invalid-feedback">Please select event time.</div>
+                        </div>
+
+                        <!-- Capacity -->
+                        <div class="col-md-4">
+                            <label for="capacity" class="form-label fw-semibold">Seat Capacity</label>
+                            <input type="number" name="capacity" id="capacity" class="form-control" min="1" placeholder="50" value="<?php echo htmlspecialchars($_POST['capacity'] ?? $edit_event['capacity'] ?? 50); ?>" required>
+                            <div class="invalid-feedback">Capacity must be greater than 0.</div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <!-- Venue -->
+                        <div class="col-md-8">
+                            <label for="venue" class="form-label fw-semibold">Venue / Location</label>
+                            <input type="text" name="venue" id="venue" class="form-control" placeholder="e.g. Auditorium B / Main Sports Complex" value="<?php echo htmlspecialchars($_POST['venue'] ?? $edit_event['venue'] ?? ''); ?>" required>
+                            <div class="invalid-feedback">Venue is required.</div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-4">
+                            <label for="status" class="form-label fw-semibold">Status</label>
+                            <select name="status" id="status" class="form-select" required>
+                                <?php foreach (['Upcoming', 'Ongoing', 'Completed', 'Cancelled'] as $st): ?>
+                                    <option value="<?php echo $st; ?>" <?php echo (($_POST['status'] ?? $edit_event['status'] ?? 'Upcoming') === $st) ? 'selected' : ''; ?>><?php echo $st; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-nsbm px-4">
+                            <i class="bi bi-save me-1"></i> <?php echo $edit_event ? 'Update Event' : 'Publish Event'; ?>
+                        </button>
+                        <a href="events_manage.php" class="btn btn-light border">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php else: ?>
+    <!-- EVENTS LIST TABLE -->
+    <div class="glass-card p-4">
+        <?php if (empty($events)): ?>
+            <div class="text-center py-5 text-muted">
+                <i class="bi bi-calendar-x display-4 mb-2"></i>
+                <h5>No events available</h5>
+                <p>Click "Create New Event" above to add your first campus event.</p>
+            </div>
+        <?php else: ?>
+            <div class="table-responsive">
+                <table class="table table-custom">
+                    <thead>
+                        <tr class="text-muted small">
+                            <th>Event Details</th>
+                            <th>Category</th>
+                            <th>Date & Time</th>
+                            <th>Venue</th>
+                            <th>Capacity</th>
+                            <th>Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($events as $evt): 
+                            $registered_count = get_event_registration_count($pdo, $evt['id']);
+                        ?>
+                            <tr>
+                                <td>
+                                    <div class="fw-bold text-dark fs-6"><?php echo htmlspecialchars($evt['title']); ?></div>
+                                    <div class="small text-muted text-truncate" style="max-width: 260px;"><?php echo htmlspecialchars($evt['description']); ?></div>
+                                </td>
+                                <td><span class="badge bg-light text-dark border"><?php echo htmlspecialchars($evt['category_name']); ?></span></td>
+                                <td class="small">
+                                    <i class="bi bi-calendar3 me-1 text-muted"></i><?php echo date('M d, Y', strtotime($evt['event_date'])); ?><br>
+                                    <i class="bi bi-clock me-1 text-muted"></i><?php echo date('h:i A', strtotime($evt['event_time'])); ?>
+                                </td>
+                                <td class="small"><i class="bi bi-geo-alt me-1 text-muted"></i><?php echo htmlspecialchars($evt['venue']); ?></td>
+                                <td class="small fw-semibold">
+                                    <span class="<?php echo $registered_count >= $evt['capacity'] ? 'text-danger fw-bold' : 'text-dark'; ?>">
+                                        <?php echo $registered_count; ?> / <?php echo $evt['capacity']; ?>
+                                    </span>
+                                    <div class="progress progress-seat mt-1" style="width: 80px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo min(100, round(($registered_count/$evt['capacity'])*100)); ?>%"></div>
+                                    </div>
+                                </td>
+                                <td><?php echo get_status_badge($evt['status']); ?></td>
+                                <td class="text-end">
+                                    <a href="participants_report.php?event_id=<?php echo $evt['id']; ?>" class="btn btn-sm btn-light border text-primary me-1" title="View Roster">
+                                        <i class="bi bi-people"></i>
+                                    </a>
+                                    <a href="events_manage.php?action=edit&id=<?php echo $evt['id']; ?>" class="btn btn-sm btn-light border me-1" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="events_manage.php?action=delete&id=<?php echo $evt['id']; ?>" class="btn btn-sm btn-light border text-danger btn-confirm-delete" data-confirm-msg="Are you sure you want to delete event '<?php echo htmlspecialchars($evt['title']); ?>'? All student registrations will also be deleted." title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+
+<?php require_once '../includes/footer.php'; ?>

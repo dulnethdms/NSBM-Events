@@ -1,0 +1,203 @@
+<?php
+// Landing page after an admin logs in - quick stats + recent events.
+require_once '../includes/db_connect.php';
+require_once '../includes/functions.php';
+require_once '../includes/session_check.php';
+
+// only admins allowed past this point
+require_role('admin');
+
+$page_title = "Admin Dashboard";
+
+// pull the numbers for the stat cards up top
+try {
+    $total_events = $pdo->query("SELECT COUNT(*) FROM events")->fetchColumn();
+    $total_categories = $pdo->query("SELECT COUNT(*) FROM categories")->fetchColumn();
+    $total_registrations = $pdo->query("SELECT COUNT(*) FROM registrations")->fetchColumn();
+    $total_announcements = $pdo->query("SELECT COUNT(*) FROM announcements")->fetchColumn();
+
+    // last 5 events created, newest first
+    $stmt_recent = $pdo->prepare("
+        SELECT e.*, c.name AS category_name 
+        FROM events e 
+        JOIN categories c ON e.category_id = c.id 
+        ORDER BY e.created_at DESC 
+        LIMIT 5
+    ");
+    $stmt_recent->execute();
+    $recent_events = $stmt_recent->fetchAll();
+
+} catch (PDOException $e) {
+    die("Database error loading dashboard: " . $e->getMessage());
+}
+
+require_once '../includes/header.php';
+?>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-speedometer2 text-success me-2"></i>Admin Dashboard</h2>
+        <p class="text-muted small mb-0">Overview of university events, categories, and student registrations</p>
+    </div>
+    <div>
+        <a href="events_manage.php?action=add" class="btn btn-nsbm shadow-sm">
+            <i class="bi bi-plus-circle me-1"></i> Create New Event
+        </a>
+    </div>
+</div>
+
+<!-- Metrics Cards Row -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-sm-6">
+        <div class="glass-card p-3 stat-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase">Total Events</span>
+                    <h3 class="fw-bold mb-0 text-dark"><?php echo $total_events; ?></h3>
+                </div>
+                <div class="stat-icon">
+                    <i class="bi bi-calendar-event"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="glass-card p-3 stat-card" style="border-left-color: #3b82f6;">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase">Categories</span>
+                    <h3 class="fw-bold mb-0 text-dark"><?php echo $total_categories; ?></h3>
+                </div>
+                <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                    <i class="bi bi-tags"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="glass-card p-3 stat-card" style="border-left-color: #8b5cf6;">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase">Registrations</span>
+                    <h3 class="fw-bold mb-0 text-dark"><?php echo $total_registrations; ?></h3>
+                </div>
+                <div class="stat-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                    <i class="bi bi-person-check"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="glass-card p-3 stat-card" style="border-left-color: #f59e0b;">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small fw-semibold text-uppercase">Announcements</span>
+                    <h3 class="fw-bold mb-0 text-dark"><?php echo $total_announcements; ?></h3>
+                </div>
+                <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                    <i class="bi bi-megaphone"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Events & Quick Tools Row -->
+<div class="row g-4">
+    <!-- Recent Events Table -->
+    <div class="col-lg-8">
+        <div class="glass-card p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0"><i class="bi bi-clock-history text-primary me-2"></i>Recently Added Events</h5>
+                <a href="events_manage.php" class="btn btn-sm btn-outline-secondary rounded-pill">View All</a>
+            </div>
+
+            <?php if (empty($recent_events)): ?>
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-calendar-x display-6 mb-2"></i>
+                    <p class="mb-0">No events created yet.</p>
+                </div>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-custom">
+                        <thead>
+                            <tr class="text-muted small">
+                                <th>Event Title</th>
+                                <th>Category</th>
+                                <th>Date & Time</th>
+                                <th>Capacity</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($recent_events as $evt): 
+                                $registered_count = get_event_registration_count($pdo, $evt['id']);
+                            ?>
+                                <tr>
+                                    <td class="fw-bold text-dark"><?php echo htmlspecialchars($evt['title']); ?></td>
+                                    <td><span class="badge bg-light text-dark border"><?php echo htmlspecialchars($evt['category_name']); ?></span></td>
+                                    <td class="small text-muted">
+                                        <?php echo date('M d, Y', strtotime($evt['event_date'])); ?><br>
+                                        <span class="text-xs"><?php echo date('h:i A', strtotime($evt['event_time'])); ?></span>
+                                    </td>
+                                    <td class="small fw-semibold">
+                                        <?php echo $registered_count; ?> / <?php echo $evt['capacity']; ?> seats
+                                    </td>
+                                    <td><?php echo get_status_badge($evt['status']); ?></td>
+                                    <td>
+                                        <a href="events_manage.php?action=edit&id=<?php echo $evt['id']; ?>" class="btn btn-sm btn-light border me-1" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="participants_report.php?event_id=<?php echo $evt['id']; ?>" class="btn btn-sm btn-light border text-primary" title="Participants Roster">
+                                            <i class="bi bi-people"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- Quick Admin Shortcuts -->
+    <div class="col-lg-4">
+        <div class="glass-card p-4 h-100">
+            <h5 class="fw-bold mb-3"><i class="bi bi-sliders text-success me-2"></i>Quick Management</h5>
+            <div class="d-grid gap-2">
+                <a href="events_manage.php" class="btn btn-light border text-start p-3 rounded-3 d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="fw-bold text-dark">Manage All Events</div>
+                        <div class="small text-muted">Create, edit venue, time, capacity</div>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+                <a href="categories_manage.php" class="btn btn-light border text-start p-3 rounded-3 d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="fw-bold text-dark">Manage Categories</div>
+                        <div class="small text-muted">Organize events by faculty & topic</div>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+                <a href="registrations_view.php" class="btn btn-light border text-start p-3 rounded-3 d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="fw-bold text-dark">View Student Signups</div>
+                        <div class="small text-muted">Inspect rosters and download reports</div>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+                <a href="announcements_manage.php" class="btn btn-light border text-start p-3 rounded-3 d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="fw-bold text-dark">Broadcast Announcements</div>
+                        <div class="small text-muted">Post global or event news notices</div>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php require_once '../includes/footer.php'; ?>
