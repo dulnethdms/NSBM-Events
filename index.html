@@ -109,34 +109,45 @@
     
     
     <!-- Announcement List -->
-    <div class="list-group shadow-sm rounded-3">
-      <!-- Example Announcement Item -->
-      <div class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">Hackathon Registration Open</div>
-          Register now for the NSBM Hackathon 2026. Limited seats available!
+<div class="list-group shadow-sm rounded-3">
+    <?php if (empty($announcements)): ?>
+        <div class="list-group-item text-muted text-center py-4">
+            No announcements posted yet.
         </div>
-        <span class="badge bg-success rounded-pill">New</span>
-      </div>
+    <?php else: ?>
+        <?php foreach ($announcements as $ann): ?>
+            <?php
+                // Decide badge based on type + recency
+                $isNew = (strtotime($ann['created_at']) >= strtotime('-2 days'));
 
-      <div class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">Sports Meet Postponed</div>
-          Due to weather conditions, the annual sports meet is rescheduled to Sept 15.
-        </div>
-        <span class="badge bg-warning rounded-pill">Update</span>
-      </div>
-
-      <div class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">Guest Lecture</div>
-          Join us for a lecture on AI Ethics by Dr. Perera, Sept 10 at Auditorium A.
-        </div>
-        <span class="badge bg-info rounded-pill">Event</span>
-      </div>
-    </div>
-  </div>
-</section>
+                if ($ann['event_id']) {
+                    $badgeText  = 'Event';
+                    $badgeClass = 'bg-info';
+                } elseif ($isNew) {
+                    $badgeText  = 'New';
+                    $badgeClass = 'bg-success';
+                } else {
+                    $badgeText  = 'Notice';
+                    $badgeClass = 'bg-warning';
+                }
+            ?>
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold"><?php echo htmlspecialchars($ann['title']); ?></div>
+                    <?php echo nl2br(htmlspecialchars($ann['content'])); ?>
+                    <div class="text-muted small mt-1">
+                        <?php echo date('M d, Y - h:i A', strtotime($ann['created_at'])); ?>
+                        &middot; by <?php echo htmlspecialchars($ann['author_name']); ?>
+                        <?php if ($ann['event_id']): ?>
+                            &middot; <?php echo htmlspecialchars($ann['event_title']); ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <span class="badge <?php echo $badgeClass; ?> rounded-pill"><?php echo $badgeText; ?></span>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
 
     <!--
     <section class="alert-info">
