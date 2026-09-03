@@ -131,7 +131,8 @@ h1, h4, h5, h6 {
     z-index: 2;
     transform: scale(1); /* start normal size */
     opacity: 0; 
-            /* start hidden */
+    max-width:67%;
+           
     
     }
     
@@ -226,7 +227,7 @@ h1, h4, h5, h6 {
 /* Section container */
 .browse-events {
   padding: 48px 16px; /* 3rem → 48px, 1rem → 16px */
-  margin-top: 700px;
+  margin-top: 500px;
   
 }
 
