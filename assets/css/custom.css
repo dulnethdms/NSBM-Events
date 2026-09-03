@@ -300,67 +300,7 @@ h1, h4, h5, h6 {
 
 
 
-.browse-events {
-  padding: 3rem 1.5rem;
-  text-align: center;
-}
 
-.section-header h2 {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.event-cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.event-card {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  overflow: hidden;
-  width: 300px;
-  text-align: left;
-}
-
-.event-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.event-card-body {
-  padding: 1rem;
-}
-
-.event-card-title {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.event-card-text {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 1rem;
-}
-
-.event-card .btn {
-  display: inline-block;
-  background: #28a745;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.event-card .btn:hover {
-  background: #218838;
-}
 
 
 
