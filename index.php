@@ -40,8 +40,8 @@
 <!-- Full-bleed photo swap on scroll, handled in main.js -->
 <section class="photo-section">
   <div class="photo-wrapper">
-    <img src="<?php echo BASE_URL; ?>/assets/images/image1.webp" alt="First photo" class="photo base-photo">
-    <img src="<?php echo BASE_URL; ?>/assets/images/Image2.jpeg" alt="Second photo" class="photo overlay-photo">
+    <img src="assets/images/image1.webp" alt="First photo" class="photo base-photo">
+    <img src="assets/images/Image2.jpeg" alt="Second photo" class="photo overlay-photo">
 </section>
 
 <!-- Main Wrapper -->
