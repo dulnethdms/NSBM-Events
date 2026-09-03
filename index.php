@@ -1,7 +1,6 @@
 <?php
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,8 +40,8 @@
 <!-- Full-bleed photo swap on scroll, handled in main.js -->
 <section class="photo-section">
   <div class="photo-wrapper">
-    <img src="includes\Images\image1.webp" alt="First photo" class="photo base-photo">
-    <img src="includes\Images\image2.jpeg" alt="Second photo" class="photo overlay-photo"> 
+    <img src="C:\xampp\htdocs\NSBM-Events\assets\images\image1.webp" alt="First photo" class="photo base-photo">
+    <img src="C:\xampp\htdocs\NSBM-Events\assets\images\Image2.jpeg" alt="Second photo" class="photo overlay-photo"> 
   </div>
 </section>
 
