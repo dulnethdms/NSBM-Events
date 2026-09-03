@@ -224,7 +224,7 @@ h1, h4, h5, h6 {
 
 /* ---------- Browse Events ---------- */
 
-/* Section container */
+/* Section container 
 .browse-events {
   padding: 48px 16px; /* 3rem → 48px, 1rem → 16px */
   margin-top: 500px;
@@ -233,28 +233,28 @@ h1, h4, h5, h6 {
 
 .section-header {
   text-align: center;
-  margin-bottom: 32px; /* 2rem → 32px */
+  margin-bottom: 32px; 
 }
 
 .section-header h2 {
-  font-size: 32px; /* 2rem → 32px */
+  font-size: 32px; 
   font-weight: 600;
   color: #e3dddd;
 }
 
 .section-header p {
   color: #ede7e7;
-  font-size: 15px; /* 0.95rem → ~15px */
+  font-size: 15px; 
 }
 
-/* Event cards grid */
+/* Event cards grid 
 .event-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px; /* 1.5rem → 24px */
 }
 
-/* Individual card */
+/* Individual card 
 .event-card {
   background: #fff;
   border-radius: 8px;
@@ -274,29 +274,96 @@ h1, h4, h5, h6 {
   object-fit: cover;
 }
 
-/* Card body */
+/* Card body 
 .event-card-body {
-  padding: 16px; /* 1rem → 16px */
+  padding: 16px;  1rem → 16px 
 }
 
 .event-card-title {
-  font-size: 19px; /* 1.2rem → ~19px */
+  font-size: 19px; 
   font-weight: 600;
-  margin-bottom: 8px; /* 0.5rem → 8px */
+  margin-bottom: 8px; /* 0.5rem → 8px
   color: #1a1a1a;
 }
 
 .event-card-text {
-  font-size: 15px; /* 0.95rem → ~15px */
+  font-size: 15px; /* 0.95rem → ~15px 
   color: #555;
-  margin-bottom: 16px; /* 1rem → 16px */
+  margin-bottom: 16px; /* 1rem → 16px 
   line-height: 1.4;
 }
-/* Wrapper to center the button */
+/* Wrapper to center the button 
 .see-all {
   text-align: center;
-  margin-top: 12px; /* spacing above the button */
+  margin-top: 12px; /* spacing above the button 
 }
+*/
+
+
+.browse-events {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.section-header h2 {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.event-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.event-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 300px;
+  text-align: left;
+}
+
+.event-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.event-card-body {
+  padding: 1rem;
+}
+
+.event-card-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.event-card-text {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.event-card .btn {
+  display: inline-block;
+  background: #28a745;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.event-card .btn:hover {
+  background: #218838;
+}
+
+
+
 
 
 
