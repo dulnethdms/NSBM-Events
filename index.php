@@ -21,30 +21,30 @@
       <span>NSBM EventHub</span>
     </a>
     <div class="nav-actions">
+      <a class="btn" href="auth/register.html">
+        <i class="bi bi-person-plus"></i> Announcements
+      </a>
+      <a class="btn" href="auth/register.html">
+        <i></i> Event Browser
+      </a>
       <a class="btn" href="auth/login.html">
         <i class="bi bi-box-arrow-in-right"></i> Login
       </a>
       <a class="btn" href="auth/register.html">
         <i class="bi bi-person-plus"></i> Register
       </a>
-      <a class="btn" href="auth/register.html">
-        <i class="bi bi-person-plus"></i> Announcments
-      </a>
-      <a class="btn" href="auth/register.html">
-        <i></i> Event Browser
-      </a>
     </div>
   </div>
 </nav>
 </section>
-<!-- Full-bleed photo swap on scroll, handled in main.js -->
+
 <section class="photo-section">
   <div class="photo-wrapper">
     <img src="assets/images/image1.webp" alt="First photo" class="photo base-photo">
     <img src="assets/images/Image2.jpeg" alt="Second photo" class="photo overlay-photo">
 </section>
 
-<!-- Main Wrapper -->
+
 <main class="main-wrapper">
   <div class="container">
 
@@ -60,11 +60,7 @@
           </div>
         </div>
 
-        <!--<div class="hero-box">
-          <i class="bi bi-calendar-week hero-box-icon"></i>
-          <h4>Seamless Seat Reservations</h4>
-          <p>Automatic seat tracking prevents double-booking and ensures fair access to all events.</p>
-        </div>-->
+       
       </div>
     </section>
 
@@ -80,7 +76,7 @@
           <div class="event-card-body">
             <h5 class="event-card-title">NSBM Hackathon 2026</h5>
             <p class="event-card-text">Join the annual coding marathon and showcase your programming skills. Compete for prizes and recognition!</p>
-            <a href="student/events_browse.php" class="btn">Browse Events</a>
+            
           </div>
         </div>
         <div class="event-card">
@@ -88,7 +84,7 @@
           <div class="event-card-body">
             <h5 class="event-card-title">Sports Championship 2026</h5>
             <p class="event-card-text">Cheer for your favorite teams in the inter-college sports championship. Reserve your seats for the finals now!</p>
-            <a href="student/events_browse.php" class="btn">Browse Events</a>
+            
           </div>
         </div>
         <div class="event-card">
@@ -96,7 +92,7 @@
           <div class="event-card-body">
             <h5 class="event-card-title">Cultural Festival 2026</h5>
             <p class="event-card-text">Experience the vibrant cultural festival with music, dance, and food from around the world. Reserve your spot today!</p>
-            <a href="student/events_browse.php" class="btn">Browse Events</a>
+            
           </div>
         </div>
       </div>
@@ -149,18 +145,7 @@
     <?php endif; ?>
 </div>
 
-    <!--
-    <section class="alert-info">
-      <i class="bi bi-info-circle-fill alert-icon"></i>
-      <div>
-        <h6>Learning Project - Demo Credentials:</h6>
-        <ul>
-          <li><strong>Admin:</strong> <code>admin@nsbm.ac.lk</code> / <code>admin123</code></li>
-          <li><strong>Student:</strong> <code>kamal@student.nsbm.ac.lk</code> / <code>student123</code></li>
-        </ul>
-      </div>
-    </section>
-    -->
+    
 
   </div>
 </main>
