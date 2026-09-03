@@ -224,9 +224,9 @@ h1, h4, h5, h6 {
 
 /* ---------- Browse Events ---------- */
 
-/* Section container 
+/* Section container */
 .browse-events {
-  padding: 48px 16px; /* 3rem → 48px, 1rem → 16px */
+  padding: 48px 16px;
   margin-top: 500px;
   
 }
@@ -247,14 +247,14 @@ h1, h4, h5, h6 {
   font-size: 15px; 
 }
 
-/* Event cards grid 
+/* Event cards grid */
 .event-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px; /* 1.5rem → 24px */
+  gap: 24px; 
 }
 
-/* Individual card 
+/* Individual card */
 .event-card {
   background: #fff;
   border-radius: 8px;
@@ -274,30 +274,30 @@ h1, h4, h5, h6 {
   object-fit: cover;
 }
 
-/* Card body 
+/* Card body */
 .event-card-body {
-  padding: 16px;  1rem → 16px 
+  padding: 16px;   
 }
 
 .event-card-title {
   font-size: 19px; 
   font-weight: 600;
-  margin-bottom: 8px; /* 0.5rem → 8px
+  margin-bottom: 8px; 
   color: #1a1a1a;
 }
 
 .event-card-text {
-  font-size: 15px; /* 0.95rem → ~15px 
+  font-size: 15px; 
   color: #555;
-  margin-bottom: 16px; /* 1rem → 16px 
+  margin-bottom: 16px; 
   line-height: 1.4;
 }
-/* Wrapper to center the button 
+/* Wrapper to center the button */
 .see-all {
   text-align: center;
-  margin-top: 12px; /* spacing above the button 
+  margin-top: 12px; 
 }
-*/
+
 
 
 .browse-events {

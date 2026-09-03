@@ -68,61 +68,39 @@
       </div>
     </section>
 
-
-
-    
-    <?php
-// Browse Events preview - pulls 3 soonest upcoming events from DB
-require_once 'includes/db_connect.php'; // adjust path to match homepage location
-
-try {
-    $stmt = $pdo->query("
-        SELECT e.*, c.name AS category_name
-        FROM events e
-        JOIN categories c ON e.category_id = c.id
-        WHERE e.event_date >= CURDATE()
-        ORDER BY e.event_date ASC, e.event_time ASC
-        LIMIT 3
-    ");
-    $preview_events = $stmt->fetchAll();
-} catch (PDOException $e) {
-    $preview_events = [];
-}
-
-$default_image = 'assets/images/image1.webp'; // fallback if event has no image
-?>
-
-<section class="browse-events">
-    <div class="section-header">
+    <!-- Browse Events preview cards - just a teaser, the real listing is student/events_browse.php -->
+    <section class="browse-events">
+      <div class="section-header">
         <h2>Browse Campus Events</h2>
         <p class="text-muted small">Explore upcoming workshops, sports events, and cultural festivals</p>
-    </div>
-
-    <?php if (empty($preview_events)): ?>
-        <p class="text-muted text-center">No upcoming events right now. Check back soon!</p>
-    <?php else: ?>
-        <div class="event-cards">
-            <?php foreach ($preview_events as $evt): ?>
-                <div class="event-card">
-                    <img src="<?php echo htmlspecialchars($evt['image_url'] ?: $default_image); ?>" 
-                         alt="<?php echo htmlspecialchars($evt['title']); ?>">
-                    <div class="event-card-body">
-                        <h5 class="event-card-title"><?php echo htmlspecialchars($evt['title']); ?></h5>
-                        <p class="event-card-text">
-                            <?php echo htmlspecialchars(mb_strimwidth($evt['description'], 0, 120, '...')); ?>
-                        </p>
-                        <a href="student/events_browse.php" class="btn">Browse Events</a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+      </div>
+      <div class="event-cards">
+        <div class="event-card">
+          <img src="https://students.nsbm.ac.lk/_next/image?url=%2Fhome2%2FFront-Globe.jpg&w=3840&q=75" alt="Event 1">
+          <div class="event-card-body">
+            <h5 class="event-card-title">NSBM Hackathon 2026</h5>
+            <p class="event-card-text">Join the annual coding marathon and showcase your programming skills. Compete for prizes and recognition!</p>
+            <a href="student/events_browse.php" class="btn">Browse Events</a>
+          </div>
         </div>
-    <?php endif; ?>
-</section>
-
-
-
-
-
+        <div class="event-card">
+          <img src="https://media.licdn.com/dms/image/v2/C561BAQEOoczaGxpdNg/company-background_10000/company-background_10000/0/1628311829240/human_resource_circle_of_nsbm_green_university_cover?e=2147483647&v=beta&t=lTFSwYGtxTxqdjSKT9gQqSd5BybpeKxa0beuTa-MaV0" alt="Event 2">
+          <div class="event-card-body">
+            <h5 class="event-card-title">Sports Championship 2026</h5>
+            <p class="event-card-text">Cheer for your favorite teams in the inter-college sports championship. Reserve your seats for the finals now!</p>
+            <a href="student/events_browse.php" class="btn">Browse Events</a>
+          </div>
+        </div>
+        <div class="event-card">
+          <img src="https://students.nsbm.ac.lk/_next/image?url=%2Fhome2%2FFront-Globe.jpg&w=3840&q=75" alt="Event 3">
+          <div class="event-card-body">
+            <h5 class="event-card-title">Cultural Festival 2026</h5>
+            <p class="event-card-text">Experience the vibrant cultural festival with music, dance, and food from around the world. Reserve your spot today!</p>
+            <a href="student/events_browse.php" class="btn">Browse Events</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <div class="see-all">
       <a href="student/events_browse.php" class="btn">See All Events</a>
