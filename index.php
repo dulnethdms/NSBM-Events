@@ -17,7 +17,7 @@
 <section class="navsec">
 <nav class="navbar-nsbm">
   <div class="container">
-    <a class="navbar-brand" href="index.html">
+    <a class="navbar-brand" href="index.php">
       <span>NSBM EventHub</span>
     </a>
     <div class="nav-actions">
