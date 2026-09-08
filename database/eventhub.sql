@@ -117,11 +117,6 @@ INSERT INTO `announcements` (`id`, `title`, `content`, `event_id`, `created_by`)
 (1, 'Welcome to NSBM EventHub!', 'We are excited to launch our official student event scheduling platform. Browse upcoming events and reserve your seats early!', NULL, 1),
 (2, 'Hackathon Pre-workshop Details', 'All participants registered for NSBM Hackathon 2026 are requested to join the Slack channel sent via email.', 1, 1);
 
-
-
-
-
-
 -- Add image_url column if not already added
 ALTER TABLE announcements 
 ADD COLUMN image_url VARCHAR(255) DEFAULT NULL AFTER content;

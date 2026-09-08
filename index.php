@@ -1,4 +1,22 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require_once 'includes/db_connect.php';
+
+try {
+    $stmt = $pdo->query("
+        SELECT a.*, e.title AS event_title, u.full_name AS author_name
+        FROM announcements a
+        LEFT JOIN events e ON a.event_id = e.id
+        JOIN users u ON a.created_by = u.id
+        ORDER BY a.created_at DESC
+        LIMIT 5
+    ");
+    $announcements = $stmt->fetchAll();
+} catch (PDOException $e) {
+    $announcements = [];
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,30 +39,54 @@
       <span>NSBM EventHub</span>
     </a>
     <div class="nav-actions">
-      <a class="btn" href="auth/register.html">
-        <i class="bi bi-person-plus"></i> Announcements
+<?php if (isset($_SESSION['user_id'])): ?>
+      <?php if ($_SESSION['user_role'] === 'admin'): ?>
+      <a class="btn" href="admin/dashboard.php">
+        <i class="bi bi-speedometer2"></i> Dashboard
       </a>
-      <a class="btn" href="auth/register.html">
-        <i></i> Event Browser
+      <a class="btn" href="admin/announcements_manage.php">
+        <i class="bi bi-megaphone"></i> Announcements
       </a>
-      <a class="btn" href="auth/login.html">
+      <?php else: ?>
+      <a class="btn" href="student/dashboard.php">
+        <i class="bi bi-speedometer2"></i> Dashboard
+      </a>
+      <a class="btn" href="student/announcements_view.php">
+        <i class="bi bi-megaphone"></i> Announcements
+      </a>
+      <a class="btn" href="student/events_browse.php">
+        <i class="bi bi-compass"></i> Event Browser
+      </a>
+      <?php endif; ?>
+      <a class="btn" href="auth/logout.php">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </a>
+<?php else: ?>
+      <a class="btn" href="auth/login.php">
         <i class="bi bi-box-arrow-in-right"></i> Login
       </a>
-      <a class="btn" href="auth/register.html">
+      <a class="btn" href="auth/register.php">
         <i class="bi bi-person-plus"></i> Register
       </a>
+      <a class="btn" href="auth/login.php">
+        <i class="bi bi-megaphone"></i> Announcements
+      </a>
+      <a class="btn" href="auth/login.php">
+        <i class="bi bi-compass"></i> Event Browser
+      </a>
+<?php endif; ?>
     </div>
   </div>
 </nav>
 </section>
-
+<!-- Full-bleed photo swap on scroll, handled in main.js -->
 <section class="photo-section">
   <div class="photo-wrapper">
     <img src="assets/images/image1.webp" alt="First photo" class="photo base-photo">
     <img src="assets/images/Image2.jpeg" alt="Second photo" class="photo overlay-photo">
 </section>
 
-
+<!-- Main Wrapper -->
 <main class="main-wrapper">
   <div class="container">
 
@@ -55,12 +97,21 @@
           <h1>Discover, Schedule &amp; Attend Campus Events</h1>
           <p>NSBM EventHub connects students with faculty workshops, sports championships, hackathons, and cultural festivals. Reserve seats in real-time!</p>
           <div class="hero-actions">
-            <a href="student/events_browse.php" class="btn">Browse Events</a>
+<?php if (isset($_SESSION['user_id'])): ?>
+            <a href="<?php echo $_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php'; ?>" class="btn">Browse Events</a>
+            <a href="<?php echo $_SESSION['user_role'] === 'admin' ? 'admin/dashboard.php' : 'student/dashboard.php'; ?>" class="btn">Dashboard</a>
+<?php else: ?>
+            <a href="auth/login.php" class="btn">Browse Events</a>
             <a href="auth/login.php" class="btn">Login / Register</a>
+<?php endif; ?>
           </div>
         </div>
 
-       
+        <!--<div class="hero-box">
+          <i class="bi bi-calendar-week hero-box-icon"></i>
+          <h4>Seamless Seat Reservations</h4>
+          <p>Automatic seat tracking prevents double-booking and ensures fair access to all events.</p>
+        </div>-->
       </div>
     </section>
 
@@ -76,7 +127,7 @@
           <div class="event-card-body">
             <h5 class="event-card-title">NSBM Hackathon 2026</h5>
             <p class="event-card-text">Join the annual coding marathon and showcase your programming skills. Compete for prizes and recognition!</p>
-            
+            <a href="<?php echo isset($_SESSION['user_id']) ? ($_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php') : 'auth/login.php'; ?>" class="btn">Browse Events</a>
           </div>
         </div>
         <div class="event-card">
@@ -84,7 +135,7 @@
           <div class="event-card-body">
             <h5 class="event-card-title">Sports Championship 2026</h5>
             <p class="event-card-text">Cheer for your favorite teams in the inter-college sports championship. Reserve your seats for the finals now!</p>
-            
+            <a href="<?php echo isset($_SESSION['user_id']) ? ($_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php') : 'auth/login.php'; ?>" class="btn">Browse Events</a>
           </div>
         </div>
         <div class="event-card">
@@ -92,22 +143,24 @@
           <div class="event-card-body">
             <h5 class="event-card-title">Cultural Festival 2026</h5>
             <p class="event-card-text">Experience the vibrant cultural festival with music, dance, and food from around the world. Reserve your spot today!</p>
-            
+            <a href="<?php echo isset($_SESSION['user_id']) ? ($_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php') : 'auth/login.php'; ?>" class="btn">Browse Events</a>
           </div>
         </div>
       </div>
     </section>
 
     <div class="see-all">
-      <a href="student/events_browse.php" class="btn">See All Events</a>
+      <a href="<?php echo isset($_SESSION['user_id']) ? ($_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php') : 'auth/login.php'; ?>" class="btn">See All Events</a>
     </div>
 
     
     
     <!-- Announcement List -->
-<div class="list-group shadow-sm rounded-3">
+    <section class="announcements-section">
+      <h3 class="mb-4"><i class="bi bi-megaphone-fill text-warning me-2"></i> Recent Announcements</h3>
+      <div class="announcement-grid">
     <?php if (empty($announcements)): ?>
-        <div class="list-group-item text-muted text-center py-4">
+        <div class="announcement-card text-muted text-center py-4">
             No announcements posted yet.
         </div>
     <?php else: ?>
@@ -127,10 +180,12 @@
                     $badgeClass = 'bg-warning';
                 }
             ?>
-            <div class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="announcement-card d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold"><?php echo htmlspecialchars($ann['title']); ?></div>
-                    <?php echo nl2br(htmlspecialchars($ann['content'])); ?>
+                    <div class="announcement-content mb-2 mt-1">
+                        <?php echo nl2br(htmlspecialchars($ann['content'])); ?>
+                    </div>
                     <div class="text-muted small mt-1">
                         <?php echo date('M d, Y - h:i A', strtotime($ann['created_at'])); ?>
                         &middot; by <?php echo htmlspecialchars($ann['author_name']); ?>
@@ -143,9 +198,21 @@
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
-</div>
+      </div>
+    </section>
 
-    
+    <!--
+    <section class="alert-info">
+      <i class="bi bi-info-circle-fill alert-icon"></i>
+      <div>
+        <h6>Learning Project - Demo Credentials:</h6>
+        <ul>
+          <li><strong>Admin:</strong> <code>admin@nsbm.ac.lk</code> / <code>admin123</code></li>
+          <li><strong>Student:</strong> <code>kamal@student.nsbm.ac.lk</code> / <code>student123</code></li>
+        </ul>
+      </div>
+    </section>
+    -->
 
   </div>
 </main>

@@ -226,32 +226,32 @@ h1, h4, h5, h6 {
 
 /* Section container */
 .browse-events {
-  padding: 48px 16px;
+  padding: 48px 16px; /* 3rem → 48px, 1rem → 16px */
   margin-top: 500px;
   
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 32px; 
+  margin-bottom: 32px; /* 2rem → 32px */
 }
 
 .section-header h2 {
-  font-size: 32px; 
+  font-size: 32px; /* 2rem → 32px */
   font-weight: 600;
   color: #e3dddd;
 }
 
 .section-header p {
   color: #ede7e7;
-  font-size: 15px; 
+  font-size: 15px; /* 0.95rem → ~15px */
 }
 
 /* Event cards grid */
 .event-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px; 
+  gap: 24px; /* 1.5rem → 24px */
 }
 
 /* Individual card */
@@ -276,34 +276,27 @@ h1, h4, h5, h6 {
 
 /* Card body */
 .event-card-body {
-  padding: 16px;   
+  padding: 16px; /* 1rem → 16px */
 }
 
 .event-card-title {
-  font-size: 19px; 
+  font-size: 19px; /* 1.2rem → ~19px */
   font-weight: 600;
-  margin-bottom: 8px; 
+  margin-bottom: 8px; /* 0.5rem → 8px */
   color: #1a1a1a;
 }
 
 .event-card-text {
-  font-size: 15px; 
+  font-size: 15px; /* 0.95rem → ~15px */
   color: #555;
-  margin-bottom: 16px; 
+  margin-bottom: 16px; /* 1rem → 16px */
   line-height: 1.4;
 }
 /* Wrapper to center the button */
 .see-all {
   text-align: center;
-  margin-top: 12px; 
+  margin-top: 12px; /* spacing above the button */
 }
-
-
-
-
-
-
-
 
 
 
@@ -435,27 +428,37 @@ h1, h4, h5, h6 {
   font-size: 1.8rem;
 }
 
-/* List Group Styling */
-.announcements-section .list-group {
+/* We merge your friend's original list group styling into separate cards here */
+.announcements-section .announcement-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Separate each announcement to make it look cleaner */
+}
+
+.announcements-section .announcement-card {
+  background-color: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
-  overflow: hidden;
-}
-
-.announcements-section .list-group-item {
-  background-color: #fff;
-  border: none;
   padding: 1rem 1.25rem;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.announcements-section .list-group-item:hover {
+.announcements-section .announcement-card:hover {
   background-color: #f3f4f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05) !important;
 }
 
 .announcements-section .fw-bold {
   font-size: 1rem;
   color: #111827;
+}
+
+/* Make text inside announcement cards look clean */
+.announcements-section .announcement-content {
+  color: #4b5563; /* slightly darker muted gray for light background */
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .announcements-section .badge {
