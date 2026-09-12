@@ -79,7 +79,6 @@ try {
   </div>
 </nav>
 </section>
-<!-- Full-bleed photo swap on scroll, handled in main.js -->
 <section class="photo-section">
   <div class="photo-wrapper">
     <img src="assets/images/image1.webp" alt="First photo" class="photo base-photo">
@@ -106,16 +105,10 @@ try {
 <?php endif; ?>
           </div>
         </div>
-
-        <!--<div class="hero-box">
-          <i class="bi bi-calendar-week hero-box-icon"></i>
-          <h4>Seamless Seat Reservations</h4>
-          <p>Automatic seat tracking prevents double-booking and ensures fair access to all events.</p>
-        </div>-->
       </div>
     </section>
 
-    <!-- Browse Events preview cards - just a teaser, the real listing is student/events_browse.php -->
+    
     <section class="browse-events">
       <div class="section-header">
         <h2>Browse Campus Events</h2>
@@ -166,7 +159,7 @@ try {
     <?php else: ?>
         <?php foreach ($announcements as $ann): ?>
             <?php
-                // Decide badge based on type + recency
+                
                 $isNew = (strtotime($ann['created_at']) >= strtotime('-2 days'));
 
                 if ($ann['event_id']) {
@@ -200,24 +193,10 @@ try {
     <?php endif; ?>
       </div>
     </section>
-
-    <!--
-    <section class="alert-info">
-      <i class="bi bi-info-circle-fill alert-icon"></i>
-      <div>
-        <h6>Learning Project - Demo Credentials:</h6>
-        <ul>
-          <li><strong>Admin:</strong> <code>admin@nsbm.ac.lk</code> / <code>admin123</code></li>
-          <li><strong>Student:</strong> <code>kamal@student.nsbm.ac.lk</code> / <code>student123</code></li>
-        </ul>
-      </div>
-    </section>
-    -->
-
   </div>
 </main>
 
-<!-- Footer -->
+
 <footer>
   <div class="container">
     <p>NSBM EventHub &copy; 2026 NSBM Green University. All rights reserved.</p>
