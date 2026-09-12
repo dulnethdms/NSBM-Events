@@ -1,6 +1,5 @@
 <?php
-// Read-only feed for students - global notices and per-event updates
-// mixed together, newest on top.
+
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';

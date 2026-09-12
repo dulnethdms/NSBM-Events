@@ -116,7 +116,7 @@ try {
       </div>
       <div class="event-cards">
         <div class="event-card">
-          <img src="https://students.nsbm.ac.lk/_next/image?url=%2Fhome2%2FFront-Globe.jpg&w=3840&q=75" alt="Event 1">
+          
           <div class="event-card-body">
             <h5 class="event-card-title">NSBM Hackathon 2026</h5>
             <p class="event-card-text">Join the annual coding marathon and showcase your programming skills. Compete for prizes and recognition!</p>
@@ -124,7 +124,7 @@ try {
           </div>
         </div>
         <div class="event-card">
-          <img src="https://media.licdn.com/dms/image/v2/C561BAQEOoczaGxpdNg/company-background_10000/company-background_10000/0/1628311829240/human_resource_circle_of_nsbm_green_university_cover?e=2147483647&v=beta&t=lTFSwYGtxTxqdjSKT9gQqSd5BybpeKxa0beuTa-MaV0" alt="Event 2">
+          
           <div class="event-card-body">
             <h5 class="event-card-title">Sports Championship 2026</h5>
             <p class="event-card-text">Cheer for your favorite teams in the inter-college sports championship. Reserve your seats for the finals now!</p>
@@ -132,7 +132,7 @@ try {
           </div>
         </div>
         <div class="event-card">
-          <img src="https://students.nsbm.ac.lk/_next/image?url=%2Fhome2%2FFront-Globe.jpg&w=3840&q=75" alt="Event 3">
+          
           <div class="event-card-body">
             <h5 class="event-card-title">Cultural Festival 2026</h5>
             <p class="event-card-text">Experience the vibrant cultural festival with music, dance, and food from around the world. Reserve your spot today!</p>
