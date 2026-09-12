@@ -3,7 +3,8 @@
 // Update the credentials below to match your local XAMPP/WAMP setup
 // if they're different from the defaults.
 
-$host     = 'sql200.infinityfree.com';
+//$host     = 'sql200.infinityfree.com';
+$host     = 'localhost';
 $db       = 'if0_42791114_nsbm_eventhub';
 $user     = 'if0_42791114';
 $pass     = 'webgroup123ai';
