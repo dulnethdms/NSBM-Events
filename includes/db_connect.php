@@ -3,11 +3,24 @@
 // Update the credentials below to match your local XAMPP/WAMP setup
 // if they're different from the defaults.
 
-//$host     = 'sql200.infinityfree.com';
-$host     = 'localhost';
-$db       = 'if0_42791114_nsbm_eventhub';
-$user     = 'if0_42791114';
-$pass     = 'webgroup123ai';
+// Auto-detect local XAMPP vs InfinityFree hosting
+$server_name = $_SERVER['SERVER_NAME'] ?? $_SERVER['HTTP_HOST'] ?? 'localhost';
+$is_local = in_array(strtolower(explode(':', $server_name)[0]), ['localhost', '127.0.0.1', '::1']) 
+            || (php_sapi_name() === 'cli');
+
+if ($is_local) {
+    // Local XAMPP settings
+    $host     = 'localhost';
+    $db       = 'nsbm_eventhub';
+    $user     = 'root';
+    $pass     = '';
+} else {
+    // InfinityFree hosting settings
+    $host     = 'sql200.infinityfree.com';
+    $db       = 'if0_42791114_nsbm_eventhub';
+    $user     = 'if0_42791114';
+    $pass     = 'webgroup123ai';
+}
 $charset  = 'utf8mb4';
 
 $dsn = "mysql:host={$host};dbname={$db};charset={$charset}";
