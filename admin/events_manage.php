@@ -1,6 +1,4 @@
 <?php
-// Admin CRUD for events - add/edit/delete, all in one page depending
-// on the ?action= query param.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -14,7 +12,6 @@ $edit_event = null;
 $action = $_GET['action'] ?? 'list';
 $id     = (int)($_GET['id'] ?? 0);
 
-// delete
 if ($action === 'delete' && $id > 0) {
     try {
         $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
@@ -29,7 +26,6 @@ if ($action === 'delete' && $id > 0) {
     }
 }
 
-// pull the event we're editing so the form can pre-fill
 if ($action === 'edit' && $id > 0) {
     $stmt = $pdo->prepare("SELECT * FROM events WHERE id = ?");
     $stmt->execute([$id]);
@@ -41,7 +37,6 @@ if ($action === 'edit' && $id > 0) {
     }
 }
 
-// form was submitted - could be a new event or an edit, same handler
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $event_id    = (int)($_POST['event_id'] ?? 0);
     $title       = sanitize($_POST['title'] ?? '');
@@ -53,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $capacity    = (int)($_POST['capacity'] ?? 0);
     $status      = sanitize($_POST['status'] ?? 'Upcoming');
 
-    // required fields / sanity checks
     if (empty($title)) $errors[] = "Event title is required.";
     if (empty($description)) $errors[] = "Description is required.";
     if ($category_id <= 0) $errors[] = "Please select a category.";
@@ -66,16 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         try {
             if ($event_id > 0) {
-                // editing an existing event
                 $stmt = $pdo->prepare("
-                    UPDATE events 
+                    UPDATE events
                     SET title = ?, description = ?, category_id = ?, event_date = ?, event_time = ?, venue = ?, capacity = ?, status = ?
                     WHERE id = ?
                 ");
                 $stmt->execute([$title, $description, $category_id, $event_date, $event_time, $venue, $capacity, $status, $event_id]);
                 set_flash_message('success', 'Event updated successfully.');
             } else {
-                // brand new event
                 $stmt = $pdo->prepare("
                     INSERT INTO events (title, description, category_id, event_date, event_time, venue, capacity, status, created_by)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -91,14 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// need these for the form + the listing table below
 try {
     $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
-    
+
     $stmt_events = $pdo->query("
-        SELECT e.*, c.name AS category_name 
-        FROM events e 
-        JOIN categories c ON e.category_id = c.id 
+        SELECT e.*, c.name AS category_name
+        FROM events e
+        JOIN categories c ON e.category_id = c.id
         ORDER BY e.event_date DESC, e.event_time DESC
     ");
     $events = $stmt_events->fetchAll();
@@ -128,7 +119,6 @@ require_once '../includes/header.php';
 </div>
 
 <?php if ($action === 'add' || $action === 'edit'): ?>
-    <!-- CREATE / EDIT EVENT FORM -->
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <div class="glass-card p-4 p-md-5">
@@ -151,14 +141,12 @@ require_once '../includes/header.php';
                     <input type="hidden" name="event_id" value="<?php echo $edit_event['id'] ?? 0; ?>">
 
                     <div class="row g-3 mb-3">
-                        <!-- Title -->
                         <div class="col-md-8">
                             <label for="title" class="form-label fw-semibold">Event Title</label>
                             <input type="text" name="title" id="title" class="form-control" placeholder="e.g. NSBM AI & Robotics Expo" value="<?php echo htmlspecialchars($_POST['title'] ?? $edit_event['title'] ?? ''); ?>" required>
                             <div class="invalid-feedback">Event title is required.</div>
                         </div>
 
-                        <!-- Category -->
                         <div class="col-md-4">
                             <label for="category_id" class="form-label fw-semibold">Category</label>
                             <select name="category_id" id="category_id" class="form-select" required>
@@ -173,7 +161,6 @@ require_once '../includes/header.php';
                         </div>
                     </div>
 
-                    <!-- Description -->
                     <div class="mb-3">
                         <label for="description" class="form-label fw-semibold">Event Description</label>
                         <textarea name="description" id="description" rows="4" class="form-control" placeholder="Detailed description of schedule, prerequisites, and agenda..." required><?php echo htmlspecialchars($_POST['description'] ?? $edit_event['description'] ?? ''); ?></textarea>
@@ -181,21 +168,18 @@ require_once '../includes/header.php';
                     </div>
 
                     <div class="row g-3 mb-3">
-                        <!-- Date -->
                         <div class="col-md-4">
                             <label for="event_date" class="form-label fw-semibold">Date</label>
                             <input type="date" name="event_date" id="event_date" class="form-control" value="<?php echo htmlspecialchars($_POST['event_date'] ?? $edit_event['event_date'] ?? ''); ?>" required>
                             <div class="invalid-feedback">Please select event date.</div>
                         </div>
 
-                        <!-- Time -->
                         <div class="col-md-4">
                             <label for="event_time" class="form-label fw-semibold">Time</label>
                             <input type="time" name="event_time" id="event_time" class="form-control" value="<?php echo htmlspecialchars($_POST['event_time'] ?? $edit_event['event_time'] ?? ''); ?>" required>
                             <div class="invalid-feedback">Please select event time.</div>
                         </div>
 
-                        <!-- Capacity -->
                         <div class="col-md-4">
                             <label for="capacity" class="form-label fw-semibold">Seat Capacity</label>
                             <input type="number" name="capacity" id="capacity" class="form-control" min="1" placeholder="50" value="<?php echo htmlspecialchars($_POST['capacity'] ?? $edit_event['capacity'] ?? 50); ?>" required>
@@ -204,14 +188,12 @@ require_once '../includes/header.php';
                     </div>
 
                     <div class="row g-3 mb-4">
-                        <!-- Venue -->
                         <div class="col-md-8">
                             <label for="venue" class="form-label fw-semibold">Venue / Location</label>
                             <input type="text" name="venue" id="venue" class="form-control" placeholder="e.g. Auditorium B / Main Sports Complex" value="<?php echo htmlspecialchars($_POST['venue'] ?? $edit_event['venue'] ?? ''); ?>" required>
                             <div class="invalid-feedback">Venue is required.</div>
                         </div>
 
-                        <!-- Status -->
                         <div class="col-md-4">
                             <label for="status" class="form-label fw-semibold">Status</label>
                             <select name="status" id="status" class="form-select" required>
@@ -233,7 +215,6 @@ require_once '../includes/header.php';
         </div>
     </div>
 <?php else: ?>
-    <!-- EVENTS LIST TABLE -->
     <div class="glass-card p-4">
         <?php if (empty($events)): ?>
             <div class="text-center py-5 text-muted">
@@ -256,7 +237,7 @@ require_once '../includes/header.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($events as $evt): 
+                        <?php foreach ($events as $evt):
                             $registered_count = get_event_registration_count($pdo, $evt['id']);
                         ?>
                             <tr>

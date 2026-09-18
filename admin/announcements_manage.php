@@ -1,6 +1,4 @@
 <?php
-// Post/edit/delete announcements. Can be a general campus notice or tied
-// to a specific event (event_id nullable in the table for that reason).
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -14,7 +12,6 @@ $edit_announcement = null;
 $action = $_GET['action'] ?? 'list';
 $id     = (int)($_GET['id'] ?? 0);
 
-// delete
 if ($action === 'delete' && $id > 0) {
     try {
         $stmt = $pdo->prepare("DELETE FROM announcements WHERE id = ?");
@@ -29,7 +26,6 @@ if ($action === 'delete' && $id > 0) {
     }
 }
 
-// load the one we're editing
 if ($action === 'edit' && $id > 0) {
     $stmt = $pdo->prepare("SELECT * FROM announcements WHERE id = ?");
     $stmt->execute([$id]);
@@ -41,7 +37,6 @@ if ($action === 'edit' && $id > 0) {
     }
 }
 
-// handle the form submit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ann_id   = (int)($_POST['announcement_id'] ?? 0);
     $title    = sanitize($_POST['title'] ?? '');
@@ -54,12 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         try {
             if ($ann_id > 0) {
-                // editing
                 $stmt = $pdo->prepare("UPDATE announcements SET title = ?, content = ?, event_id = ? WHERE id = ?");
                 $stmt->execute([$title, $content, $event_id, $ann_id]);
                 set_flash_message('success', 'Announcement updated successfully.');
             } else {
-                // new post
                 $stmt = $pdo->prepare("INSERT INTO announcements (title, content, event_id, created_by) VALUES (?, ?, ?, ?)");
                 $stmt->execute([$title, $content, $event_id, $_SESSION['user_id']]);
                 set_flash_message('success', 'Announcement published successfully.');
@@ -72,15 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// so admin can optionally link this announcement to one event
 try {
     $events = $pdo->query("SELECT id, title FROM events ORDER BY title ASC")->fetchAll();
 
     $stmt_ann = $pdo->query("
-        SELECT a.*, e.title AS event_title, u.full_name AS author_name 
-        FROM announcements a 
-        LEFT JOIN events e ON a.event_id = e.id 
-        JOIN users u ON a.created_by = u.id 
+        SELECT a.*, e.title AS event_title, u.full_name AS author_name
+        FROM announcements a
+        LEFT JOIN events e ON a.event_id = e.id
+        JOIN users u ON a.created_by = u.id
         ORDER BY a.created_at DESC
     ");
     $announcements = $stmt_ann->fetchAll();
@@ -99,7 +91,6 @@ require_once '../includes/header.php';
 </div>
 
 <div class="row g-4 mb-4">
-    <!-- Form Card -->
     <div class="col-md-5">
         <div class="glass-card p-4">
             <h5 class="fw-bold mb-3">
@@ -157,7 +148,6 @@ require_once '../includes/header.php';
         </div>
     </div>
 
-    <!-- Announcement Table List -->
     <div class="col-md-7">
         <div class="glass-card p-4">
             <h5 class="fw-bold mb-3"><i class="bi bi-list-ul me-2 text-primary"></i>Posted Announcements</h5>
@@ -179,7 +169,7 @@ require_once '../includes/header.php';
                                     </a>
                                 </div>
                             </div>
-                            
+
                             <p class="small text-secondary mb-2"><?php echo htmlspecialchars($ann['content']); ?></p>
 
                             <div class="d-flex justify-content-between align-items-center small text-muted border-top pt-2 mt-2">

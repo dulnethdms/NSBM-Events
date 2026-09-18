@@ -1,12 +1,7 @@
 <?php
-/**
- * NSBM EventHub - User Registration
- * Allows new users to create an Admin or Student account.
- */
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 
-// Redirect logged-in users away from register page
 if (isset($_SESSION['user_id'])) {
     header("Location: ../index.php");
     exit();
@@ -18,14 +13,12 @@ $email     = '';
 $role      = 'student';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // 1. Sanitize user inputs
     $full_name        = sanitize($_POST['full_name'] ?? '');
     $email            = sanitize($_POST['email'] ?? '');
     $password         = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
     $role             = sanitize($_POST['role'] ?? 'student');
 
-    // 2. Server-side validations
     if (empty($full_name)) {
         $errors[] = "Full name is required.";
     }
@@ -48,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Invalid role selected.";
     }
 
-    // 3. Check for existing email if no errors so far
     if (empty($errors)) {
         try {
             $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
@@ -61,14 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // 4. Insert user record if validation passes
     if (empty($errors)) {
         try {
-            // Securely hash password using PHP's password_hash
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             $insert_stmt = $pdo->prepare("
-                INSERT INTO users (full_name, email, password, role) 
+                INSERT INTO users (full_name, email, password, role)
                 VALUES (?, ?, ?, ?)
             ");
             $insert_stmt->execute([$full_name, $email, $hashed_password, $role]);
@@ -106,7 +96,6 @@ require_once '../includes/header.php';
             <?php endif; ?>
 
             <form action="register.php" method="POST" class="needs-validation" novalidate>
-                <!-- Full Name -->
                 <div class="mb-3">
                     <label for="full_name" class="form-label fw-semibold">Full Name</label>
                     <div class="input-group">
@@ -116,7 +105,6 @@ require_once '../includes/header.php';
                     <div class="invalid-feedback">Please enter your full name.</div>
                 </div>
 
-                <!-- Email -->
                 <div class="mb-3">
                     <label for="email" class="form-label fw-semibold">Email Address</label>
                     <div class="input-group">
@@ -126,7 +114,6 @@ require_once '../includes/header.php';
                     <div class="invalid-feedback">Please provide a valid email address.</div>
                 </div>
 
-                <!-- Password -->
                 <div class="mb-3">
                     <label for="password" class="form-label fw-semibold">Password</label>
                     <div class="input-group">
@@ -136,7 +123,6 @@ require_once '../includes/header.php';
                     <div class="invalid-feedback">Password must be at least 6 characters long.</div>
                 </div>
 
-                <!-- Confirm Password -->
                 <div class="mb-4">
                     <label for="confirm_password" class="form-label fw-semibold">Confirm Password</label>
                     <div class="input-group">
@@ -146,7 +132,6 @@ require_once '../includes/header.php';
                     <div class="invalid-feedback">Please confirm your password.</div>
                 </div>
 
-                <!-- Submit Button -->
                 <button type="submit" class="btn btn-nsbm w-100 py-2 fs-6 shadow-sm mb-3">
                     <i class="bi bi-check-circle me-1"></i> Register Account
                 </button>

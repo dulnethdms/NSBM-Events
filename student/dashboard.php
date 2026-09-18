@@ -1,6 +1,4 @@
 <?php
-// First page a student sees after logging in - quick stats plus a
-// preview of what's coming up campus-wide.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -11,12 +9,10 @@ $student_id = $_SESSION['user_id'];
 $page_title = "Student Dashboard";
 
 try {
-    // total events this student has signed up for, ever
     $stmt_reg = $pdo->prepare("SELECT COUNT(*) FROM registrations WHERE student_id = ?");
     $stmt_reg->execute([$student_id]);
     $my_registrations_count = (int) $stmt_reg->fetchColumn();
 
-    // and how many of those are still ahead of us
     $stmt_up = $pdo->prepare("
         SELECT COUNT(*)
         FROM registrations r
@@ -26,10 +22,8 @@ try {
     $stmt_up->execute([$student_id]);
     $upcoming_registered_count = (int) $stmt_up->fetchColumn();
 
-    // everything open campus-wide right now, not just this student's
     $total_campus_events = (int) $pdo->query("SELECT COUNT(*) FROM events WHERE status = 'Upcoming'")->fetchColumn();
 
-    // feature the next few so the dashboard isn't just numbers
     $stmt_featured = $pdo->query("
         SELECT e.*, c.name AS category_name
         FROM events e
@@ -62,7 +56,6 @@ require_once '../includes/header.php';
     </div>
 </div>
 
-<!-- Stats Row -->
 <div class="row g-3 mb-4">
     <div class="col-md-4 col-sm-6">
         <div class="glass-card p-3 stat-card">
@@ -99,7 +92,6 @@ require_once '../includes/header.php';
     </div>
 </div>
 
-<!-- Featured Events -->
 <div class="mb-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="fw-bold mb-0"><i class="bi bi-fire text-danger me-2"></i>Upcoming Campus Highlights</h4>

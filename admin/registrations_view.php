@@ -1,6 +1,4 @@
 <?php
-// Shows how full every event is at a glance, with a link through to the
-// full participant roster for each one.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -10,7 +8,6 @@ require_role('admin');
 $page_title = "Event Registrations Overview";
 
 try {
-    // COUNT + LEFT JOIN so events with zero signups still show up as 0
     $stmt = $pdo->query("
         SELECT e.*, c.name AS category_name, COUNT(r.id) AS registered_students
         FROM events e
@@ -55,7 +52,7 @@ require_once '../includes/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($events_registration_list as $item): 
+                    <?php foreach ($events_registration_list as $item):
                         $occupancy_pct = $item['capacity'] > 0 ? round(($item['registered_students'] / $item['capacity']) * 100) : 0;
                     ?>
                         <tr>

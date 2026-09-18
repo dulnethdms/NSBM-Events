@@ -1,6 +1,4 @@
 <?php
-// Single event page - all the details plus the register/cancel button,
-// which just posts to event_register.php.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -57,7 +55,6 @@ require_once '../includes/header.php';
 </div>
 
 <div class="row g-4">
-    <!-- Main Details -->
     <div class="col-lg-8">
         <div class="glass-card p-4 p-md-5">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
@@ -105,7 +102,6 @@ require_once '../includes/header.php';
         </div>
     </div>
 
-    <!-- Reservation Sidebar -->
     <div class="col-lg-4">
         <div class="glass-card p-4 sticky-top" style="top: 90px;">
             <h5 class="fw-bold mb-3"><i class="bi bi-ticket-detailed text-primary me-2"></i>Seat Reservation</h5>
@@ -175,7 +171,6 @@ require_once '../includes/header.php';
 </div>
 
 <script>
-// stop accidental cancellations, ask first
 document.querySelectorAll('.confirm-form').forEach(function (form) {
     form.addEventListener('submit', function (e) {
         const msg = form.dataset.confirmMsg || 'Are you sure?';

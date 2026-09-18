@@ -1,7 +1,4 @@
 <?php
-// No UI here - just handles the register/cancel form posts from
-// event_details.php and my_schedule.php, then redirects back with a
-// flash message either way.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -35,21 +32,18 @@ try {
     }
 
     if ($action === 'register') {
-        // can't register once it's completed/cancelled
         if (!in_array($event['status'], ['Upcoming', 'Ongoing'], true)) {
             set_flash_message('warning', 'Registrations are closed for this event.');
             header("Location: event_details.php?id=" . $event_id);
             exit();
         }
 
-        // already signed up? don't let them do it twice
         if (is_student_registered($pdo, $event_id, $student_id)) {
             set_flash_message('info', 'You are already registered for this event!');
             header("Location: event_details.php?id=" . $event_id);
             exit();
         }
 
-        // room left? if not, stop here
         $current_registered = get_event_registration_count($pdo, $event_id);
         if ($current_registered >= $event['capacity']) {
             set_flash_message('danger', 'Sorry! This event has reached maximum capacity.');

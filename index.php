@@ -26,12 +26,12 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to NSBM EventHub</title>
 
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="assets/css/custom.css">
   <script src="assets/js/main.js" defer></script>
 </head>
 <body>
 
-<!-- Navbar -->
 <section class="navsec">
 <nav class="navbar-nsbm">
   <div class="container">
@@ -85,11 +85,9 @@ try {
     <img src="assets/images/Image2.jpeg" alt="Second photo" class="photo overlay-photo">
 </section>
 
-<!-- Main Wrapper -->
 <main class="main-wrapper">
   <div class="container">
 
-    <!-- Hero Section -->
     <section class="herosec">
       <div class="hero-section">
         <div class="hero-text">
@@ -108,7 +106,6 @@ try {
       </div>
     </section>
 
-    
     <section class="browse-events">
       <div class="section-header">
         <h2>Browse Campus Events</h2>
@@ -116,7 +113,7 @@ try {
       </div>
       <div class="event-cards">
         <div class="event-card">
-          
+
           <div class="event-card-body">
             <h5 class="event-card-title">NSBM Hackathon 2026</h5>
             <p class="event-card-text">Join the annual coding marathon and showcase your programming skills. Compete for prizes and recognition!</p>
@@ -124,7 +121,7 @@ try {
           </div>
         </div>
         <div class="event-card">
-          
+
           <div class="event-card-body">
             <h5 class="event-card-title">Sports Championship 2026</h5>
             <p class="event-card-text">Cheer for your favorite teams in the inter-college sports championship. Reserve your seats for the finals now!</p>
@@ -132,7 +129,7 @@ try {
           </div>
         </div>
         <div class="event-card">
-          
+
           <div class="event-card-body">
             <h5 class="event-card-title">Cultural Festival 2026</h5>
             <p class="event-card-text">Experience the vibrant cultural festival with music, dance, and food from around the world. Reserve your spot today!</p>
@@ -146,9 +143,6 @@ try {
       <a href="<?php echo isset($_SESSION['user_id']) ? ($_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php') : 'auth/login.php'; ?>" class="btn">See All Events</a>
     </div>
 
-    
-    
-    <!-- Announcement List -->
     <section class="announcements-section">
       <h3 class="mb-4"><i class="bi bi-megaphone-fill text-warning me-2"></i> Recent Announcements</h3>
       <div class="announcement-grid">
@@ -159,7 +153,6 @@ try {
     <?php else: ?>
         <?php foreach ($announcements as $ann): ?>
             <?php
-                
                 $isNew = (strtotime($ann['created_at']) >= strtotime('-2 days'));
 
                 if ($ann['event_id']) {
@@ -195,7 +188,6 @@ try {
     </section>
   </div>
 </main>
-
 
 <footer>
   <div class="container">

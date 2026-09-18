@@ -1,27 +1,23 @@
 <?php
-// Landing page after an admin logs in - quick stats + recent events.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
 
-// only admins allowed past this point
 require_role('admin');
 
 $page_title = "Admin Dashboard";
 
-// pull the numbers for the stat cards up top
 try {
     $total_events = $pdo->query("SELECT COUNT(*) FROM events")->fetchColumn();
     $total_categories = $pdo->query("SELECT COUNT(*) FROM categories")->fetchColumn();
     $total_registrations = $pdo->query("SELECT COUNT(*) FROM registrations")->fetchColumn();
     $total_announcements = $pdo->query("SELECT COUNT(*) FROM announcements")->fetchColumn();
 
-    // last 5 events created, newest first
     $stmt_recent = $pdo->prepare("
-        SELECT e.*, c.name AS category_name 
-        FROM events e 
-        JOIN categories c ON e.category_id = c.id 
-        ORDER BY e.created_at DESC 
+        SELECT e.*, c.name AS category_name
+        FROM events e
+        JOIN categories c ON e.category_id = c.id
+        ORDER BY e.created_at DESC
         LIMIT 5
     ");
     $stmt_recent->execute();
@@ -46,7 +42,6 @@ require_once '../includes/header.php';
     </div>
 </div>
 
-<!-- Metrics Cards Row -->
 <div class="row g-3 mb-4">
     <div class="col-md-3 col-sm-6">
         <div class="glass-card p-3 stat-card">
@@ -102,9 +97,7 @@ require_once '../includes/header.php';
     </div>
 </div>
 
-<!-- Recent Events & Quick Tools Row -->
 <div class="row g-4">
-    <!-- Recent Events Table -->
     <div class="col-lg-8">
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -131,7 +124,7 @@ require_once '../includes/header.php';
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($recent_events as $evt): 
+                            <?php foreach ($recent_events as $evt):
                                 $registered_count = get_event_registration_count($pdo, $evt['id']);
                             ?>
                                 <tr>
@@ -162,7 +155,6 @@ require_once '../includes/header.php';
         </div>
     </div>
 
-    <!-- Quick Admin Shortcuts -->
     <div class="col-lg-4">
         <div class="glass-card p-4 h-100">
             <h5 class="fw-bold mb-3"><i class="bi bi-sliders text-success me-2"></i>Quick Management</h5>

@@ -1,10 +1,7 @@
 <?php
-// Login page. Checks the email/password against the users table and
-// starts a session for whichever role they signed up as.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 
-// Redirect logged-in users away from login page
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['user_role'] === 'admin') {
         header("Location: ../admin/dashboard.php");
@@ -21,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = sanitize($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    // basic required-field checks before we even touch the db
     if (empty($email)) {
         $errors[] = "Email address is required.";
     }
@@ -31,13 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         try {
-            // look the user up by email first
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
             $stmt->execute([$email]);
             $user = $stmt->fetch();
 
             if ($user && password_verify($password, $user['password'])) {
-                // good login, set up their session
                 $_SESSION['user_id']    = $user['id'];
                 $_SESSION['user_name']  = $user['full_name'];
                 $_SESSION['user_email'] = $user['email'];
@@ -45,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 set_flash_message('success', 'Welcome back, ' . htmlspecialchars($user['full_name']) . '!');
 
-                // send them to the right dashboard
                 if ($user['role'] === 'admin') {
                     header("Location: ../admin/dashboard.php");
                 } else {
@@ -85,7 +78,6 @@ require_once '../includes/header.php';
             <?php endif; ?>
 
             <form action="login.php" method="POST" class="needs-validation" novalidate>
-                <!-- Email -->
                 <div class="mb-3">
                     <label for="email" class="form-label fw-semibold">Email Address</label>
                     <div class="input-group">
@@ -95,7 +87,6 @@ require_once '../includes/header.php';
                     <div class="invalid-feedback">Please enter your email address.</div>
                 </div>
 
-                <!-- Password -->
                 <div class="mb-4">
                     <label for="password" class="form-label fw-semibold">Password</label>
                     <div class="input-group">
@@ -105,7 +96,6 @@ require_once '../includes/header.php';
                     <div class="invalid-feedback">Please enter your password.</div>
                 </div>
 
-                <!-- Submit Button -->
                 <button type="submit" class="btn btn-nsbm w-100 py-2 fs-6 shadow-sm mb-3">
                     <i class="bi bi-box-arrow-in-right me-1"></i> Log In
                 </button>

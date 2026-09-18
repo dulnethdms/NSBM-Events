@@ -1,7 +1,4 @@
 <?php
-// Main events listing. We just render every event with data-* attributes
-// and let the little script at the bottom filter them client-side - no
-// need to hit the server again for search/filter.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -35,7 +32,6 @@ require_once '../includes/header.php';
     </div>
 </div>
 
-<!-- Search & Filter Bar -->
 <div class="glass-card p-4 mb-4">
     <div class="row g-3">
         <div class="col-md-7">
@@ -132,7 +128,6 @@ require_once '../includes/header.php';
 <?php endif; ?>
 
 <script>
-// filters the cards above as you type / change the dropdown, no reload
 (function () {
     const searchInput = document.getElementById('eventSearchInput');
     const categorySelect = document.getElementById('categoryFilterSelect');

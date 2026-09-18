@@ -1,8 +1,5 @@
-<?php
-// closes what header.php opened + loads bootstrap JS and our own script
-?>
-    </div> <!-- /container -->
-</div> <!-- /main-wrapper -->
+    </div>
+</div>
 
 <footer class="py-4 border-top border-secondary border-opacity-25 mt-auto">
     <div class="container text-center text-md-start">
@@ -25,10 +22,8 @@
     </div>
 </footer>
 
-<!-- Bootstrap 5 JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Custom JS -->
 <script src="../assets/js/main.js"></script>
 
 </body>

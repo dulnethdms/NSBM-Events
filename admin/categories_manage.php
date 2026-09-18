@@ -1,6 +1,4 @@
 <?php
-// Same idea as events_manage.php but for event categories - keeps them
-// simple, just a name + optional description.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -11,11 +9,9 @@ $page_title = "Manage Categories";
 $errors = [];
 $edit_category = null;
 
-// figure out what we're doing from the query string
 $action = $_GET['action'] ?? '';
 $id     = (int)($_GET['id'] ?? 0);
 
-// delete
 if ($action === 'delete' && $id > 0) {
     try {
         $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
@@ -30,7 +26,6 @@ if ($action === 'delete' && $id > 0) {
     }
 }
 
-// load up the category being edited
 if ($action === 'edit' && $id > 0) {
     $stmt = $pdo->prepare("SELECT * FROM categories WHERE id = ?");
     $stmt->execute([$id]);
@@ -42,7 +37,6 @@ if ($action === 'edit' && $id > 0) {
     }
 }
 
-// form submit - add or update depending on whether category_id is set
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name        = sanitize($_POST['name'] ?? '');
     $description = sanitize($_POST['description'] ?? '');
@@ -55,12 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         try {
             if ($cat_id > 0) {
-                // updating an existing one
                 $stmt = $pdo->prepare("UPDATE categories SET name = ?, description = ? WHERE id = ?");
                 $stmt->execute([$name, $description, $cat_id]);
                 set_flash_message('success', 'Category updated successfully.');
             } else {
-                // new category
                 $stmt = $pdo->prepare("INSERT INTO categories (name, description) VALUES (?, ?)");
                 $stmt->execute([$name, $description]);
                 set_flash_message('success', 'New category created successfully.');
@@ -68,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: categories_manage.php");
             exit();
         } catch (PDOException $e) {
-            if ($e->getCode() == 23000) { // Unique violation
+            if ($e->getCode() == 23000) {
                 $errors[] = "A category with the name '{$name}' already exists.";
             } else {
                 $errors[] = "Database error: " . $e->getMessage();
@@ -77,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// event_count via LEFT JOIN so categories with 0 events still show up
 try {
     $categories = $pdo->query("SELECT c.*, COUNT(e.id) AS event_count FROM categories c LEFT JOIN events e ON c.id = e.category_id GROUP BY c.id ORDER BY c.name ASC")->fetchAll();
 } catch (PDOException $e) {
@@ -88,7 +79,6 @@ require_once '../includes/header.php';
 ?>
 
 <div class="row g-4 mb-4">
-    <!-- Category Form (Add/Edit) -->
     <div class="col-md-5">
         <div class="glass-card p-4">
             <h5 class="fw-bold mb-3">
@@ -132,7 +122,6 @@ require_once '../includes/header.php';
         </div>
     </div>
 
-    <!-- Category Table List -->
     <div class="col-md-7">
         <div class="glass-card p-4">
             <h5 class="fw-bold mb-3"><i class="bi bi-tags text-primary me-2"></i>Existing Categories</h5>

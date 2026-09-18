@@ -1,6 +1,4 @@
 <?php
-// "My Schedule" tab - just a table of everything this student signed up
-// for, soonest first, with a cancel button per row.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -93,7 +91,6 @@ require_once '../includes/header.php';
 <?php endif; ?>
 
 <script>
-// same confirm-before-cancel behavior as the event details page
 document.querySelectorAll('.confirm-form').forEach(function (form) {
     form.addEventListener('submit', function (e) {
         const msg = form.dataset.confirmMsg || 'Are you sure?';

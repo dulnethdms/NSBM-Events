@@ -1,6 +1,4 @@
 <?php
-// Printable list of everyone registered for one event. There's a bit of
-// print-only CSS below to hide the nav/footer when you hit Ctrl+P.
 require_once '../includes/db_connect.php';
 require_once '../includes/functions.php';
 require_once '../includes/session_check.php';
@@ -16,7 +14,6 @@ if ($event_id <= 0) {
 }
 
 try {
-    // who/what/when for the header block
     $stmt_evt = $pdo->prepare("
         SELECT e.*, c.name AS category_name, u.full_name AS creator_name
         FROM events e
@@ -33,7 +30,6 @@ try {
         exit();
     }
 
-    // sorted by signup time so it reads like a sign-up sheet
     $stmt_participants = $pdo->prepare("
         SELECT u.id, u.full_name, u.email, r.registered_at
         FROM registrations r
@@ -52,7 +48,6 @@ $page_title = "Participant Roster - " . htmlspecialchars($event['title']);
 require_once '../includes/header.php';
 ?>
 
-<!-- Print-only CSS -->
 <style>
 @media print {
     .navbar, footer, .btn-no-print, .alert {
@@ -84,7 +79,6 @@ require_once '../includes/header.php';
 </div>
 
 <div class="glass-card p-4 p-md-5">
-    <!-- Header Block -->
     <div class="border-bottom pb-4 mb-4">
         <div class="d-flex justify-content-between align-items-start">
             <div>
@@ -106,7 +100,6 @@ require_once '../includes/header.php';
         </div>
     </div>
 
-    <!-- Participant List Table -->
     <h5 class="fw-bold mb-3"><i class="bi bi-person-check-fill text-success me-2"></i>Registered Student Roster</h5>
 
     <?php if (empty($participants)): ?>
@@ -126,9 +119,9 @@ require_once '../includes/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
                     $index = 1;
-                    foreach ($participants as $p): 
+                    foreach ($participants as $p):
                     ?>
                         <tr>
                             <td class="fw-bold text-center"><?php echo $index++; ?></td>

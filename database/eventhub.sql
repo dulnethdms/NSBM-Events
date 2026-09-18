@@ -1,28 +1,15 @@
--- ============================================================
--- NSBM EventHub - Database Schema & Sample Data
--- Database Engine: MySQL / MariaDB
--- ============================================================
-
 CREATE DATABASE IF NOT EXISTS `nsbm_eventhub` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `nsbm_eventhub`;
 
--- ------------------------------------------------------------
--- Table 1: users
--- Stores registered account information for Admins and Students
--- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `users` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `full_name` VARCHAR(100) NOT NULL,
     `email` VARCHAR(100) NOT NULL UNIQUE,
-    `password` VARCHAR(255) NOT NULL, -- Hashed using PHP password_hash()
+    `password` VARCHAR(255) NOT NULL,
     `role` ENUM('admin', 'student') NOT NULL DEFAULT 'student',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- Table 2: categories
--- Event classifications (e.g. IT & Computing, Sports, Cultural)
--- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `categories` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(100) NOT NULL UNIQUE,
@@ -30,10 +17,6 @@ CREATE TABLE IF NOT EXISTS `categories` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- Table 3: events
--- Contains main details of planned university events
--- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `events` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `title` VARCHAR(150) NOT NULL,
@@ -50,10 +33,6 @@ CREATE TABLE IF NOT EXISTS `events` (
     CONSTRAINT `fk_events_creator` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- Table 4: registrations
--- Tracks student event signups with composite uniqueness check
--- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `registrations` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `event_id` INT NOT NULL,
@@ -64,34 +43,17 @@ CREATE TABLE IF NOT EXISTS `registrations` (
     CONSTRAINT `fk_reg_student` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- Table 5: announcements
--- Broadcast news for general campus or event-specific updates
--- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `announcements` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `title` VARCHAR(150) NOT NULL,
     `content` TEXT NOT NULL,
-    `event_id` INT NULL, -- NULL indicates general announcement
+    `event_id` INT NULL,
     `created_by` INT NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT `fk_ann_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `fk_ann_creator` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- SAMPLE SEED DATA
--- Default passwords:
--- Admin password:   admin123
--- Student password: student123
--- ============================================================
-
--- NOTE: plain-text passwords for these demo accounts are documented below the hashes,
--- so the team can actually log in and test. Do not ship real hashed passwords like this
--- in a real product; this is fine only because it's sample/demo data for a class project.
--- admin@nsbm.ac.lk           -> password: admin123
--- kamal@student.nsbm.ac.lk   -> password: student123
--- nimali@student.nsbm.ac.lk  -> password: student123
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`) VALUES
 (1, 'System Admin', 'admin@nsbm.ac.lk', '$2y$10$cM3H7OZvrF3j5fv37FFf8.HgKNKWdM.wLbNIeXq/sqBdcRjeMoLkC', 'admin'),
 (2, 'Kamal Perera', 'kamal@student.nsbm.ac.lk', '$2y$10$m2VDZX4cFvxorKzDscXCpe2A1kk8b1Avjr.GnlmdF2eIZca2OXS2i', 'student'),
@@ -117,23 +79,21 @@ INSERT INTO `announcements` (`id`, `title`, `content`, `event_id`, `created_by`)
 (1, 'Welcome to NSBM EventHub!', 'We are excited to launch our official student event scheduling platform. Browse upcoming events and reserve your seats early!', NULL, 1),
 (2, 'Hackathon Pre-workshop Details', 'All participants registered for NSBM Hackathon 2026 are requested to join the Slack channel sent via email.', 1, 1);
 
--- Add image_url column if not already added
-ALTER TABLE announcements 
+ALTER TABLE announcements
 ADD COLUMN image_url VARCHAR(255) DEFAULT NULL AFTER content;
 
--- Insert 2 announcements using your existing images
 INSERT INTO announcements (title, content, image_url, event_id, created_by, created_at)
-VALUES 
-('Hackathon Registration Open', 
- 'Register now for the NSBM Hackathon 2026. Limited seats available!', 
- 'assets/images/image1.webp', 
- NULL, 
- 1, 
+VALUES
+('Hackathon Registration Open',
+ 'Register now for the NSBM Hackathon 2026. Limited seats available!',
+ 'assets/images/image1.webp',
+ NULL,
+ 1,
  NOW()),
 
-('Guest Lecture on AI Ethics', 
- 'Join us for a lecture on AI Ethics by Dr. Perera, Sept 10 at Auditorium A.', 
- 'assets/images/Image2.jpeg', 
- NULL, 
- 1, 
+('Guest Lecture on AI Ethics',
+ 'Join us for a lecture on AI Ethics by Dr. Perera, Sept 10 at Auditorium A.',
+ 'assets/images/Image2.jpeg',
+ NULL,
+ 1,
  NOW());
