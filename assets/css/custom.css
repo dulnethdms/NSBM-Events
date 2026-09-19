@@ -862,3 +862,154 @@ img {
         padding-right: 0.7rem;
     }
 }
+
+@media (max-width: 767.98px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .navsec {
+        left: 8px;
+        right: 8px;
+        width: auto;
+        transform: none;
+    }
+
+    .navsec .navbar-nsbm {
+        width: 100%;
+        padding: 10px 12px;
+    }
+
+    .navsec .navbar-nsbm .container {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .navsec .navbar-brand {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        overflow: visible;
+        padding: 0;
+    }
+
+    .nav-actions .btn {
+        width: 100%;
+        min-width: 0;
+        padding: 9px 8px;
+        justify-content: center;
+        font-size: 0.82rem;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .photo-section {
+        height: auto;
+        min-height: 100svh;
+        margin: 0;
+        padding: 0 12px;
+    }
+
+    .photo-wrapper {
+        position: relative;
+        height: auto;
+        min-height: 100svh;
+        display: block;
+        overflow: hidden;
+        border-radius: 16px;
+    }
+
+    .photo {
+        position: relative;
+    }
+
+    .base-photo {
+        display: block;
+        width: 100%;
+        height: 100svh;
+        min-height: 620px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 16px;
+    }
+
+    .overlay-photo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: min(84%, 560px);
+        height: auto;
+        max-height: 70svh;
+        object-fit: contain;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .herosec {
+        margin-top: 0;
+        padding: 20px 12px 0;
+    }
+
+    .hero-section {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .browse-events {
+        margin-top: 1.5rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .navsec {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+    }
+
+    .navsec .navbar-brand span {
+        font-size: 1.15rem;
+    }
+
+    .nav-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .nav-actions .btn:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
+
+    .photo-section {
+        padding: 0 8px;
+    }
+
+    .photo-wrapper {
+        min-height: 100svh;
+    }
+
+    .base-photo {
+        height: 100svh;
+        min-height: 580px;
+        object-fit: cover;
+    }
+
+    .overlay-photo {
+        width: 88%;
+        max-height: 66svh;
+    }
+
+    .hero-actions .btn,
+    .see-all .btn {
+        width: 100%;
+    }
+}
+
