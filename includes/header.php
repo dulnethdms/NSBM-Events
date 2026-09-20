@@ -74,9 +74,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
                 <li class="nav-item d-none d-lg-block">
-                    <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
-                        <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
-                    </button>
                 </li>
 
                 <?php if (isset($_SESSION['user_id'])): ?>
