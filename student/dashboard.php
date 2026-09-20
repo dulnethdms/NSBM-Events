@@ -17,7 +17,7 @@ try {
         SELECT COUNT(*)
         FROM registrations r
         JOIN events e ON r.event_id = e.id
-        WHERE r.student_id = ? AND e.event_date >= CURDATE()
+        WHERE r.student_id = ? AND e.status = 'Upcoming'
     ");
     $stmt_up->execute([$student_id]);
     $upcoming_registered_count = (int) $stmt_up->fetchColumn();
