@@ -29,7 +29,7 @@ require_once '../includes/header.php';
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
     <div>
         <h2 class="fw-bold mb-1"><i class="bi bi-calendar-check text-primary me-2"></i>My Registered Schedule</h2>
-        <p class="text-muted small mb-0">Your personal timetable of reserved campus events</p>
+        <p class="text-muted small mb-0 text-white">Your personal timetable of reserved campus events</p>
     </div>
     <a href="events_browse.php" class="btn btn-nsbm shadow-sm">
         <i class="bi bi-compass me-1"></i> Browse More Events

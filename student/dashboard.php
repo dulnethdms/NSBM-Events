@@ -61,7 +61,7 @@ require_once '../includes/header.php';
         <div class="glass-card p-3 stat-card">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small fw-semibold text-uppercase">My Registered Events</span>
+                    <span class="text-white small fw-semibold text-uppercase">My Registered Events</span>
                     <h3 class="fw-bold mb-0"><?php echo $my_registrations_count; ?></h3>
                 </div>
                 <div class="stat-icon"><i class="bi bi-calendar-check"></i></div>
@@ -72,7 +72,7 @@ require_once '../includes/header.php';
         <div class="glass-card p-3 stat-card" style="border-left-color:#3b82f6;">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small fw-semibold text-uppercase">Upcoming In My Timetable</span>
+                    <span class="text-white small fw-semibold text-uppercase">Upcoming In My Timetable</span>
                     <h3 class="fw-bold mb-0"><?php echo $upcoming_registered_count; ?></h3>
                 </div>
                 <div class="stat-icon" style="background: rgba(59,130,246,0.12); color:#3b82f6;"><i class="bi bi-clock-history"></i></div>
@@ -83,7 +83,7 @@ require_once '../includes/header.php';
         <div class="glass-card p-3 stat-card" style="border-left-color:#f59e0b;">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small fw-semibold text-uppercase">Open Campus Events</span>
+                    <span class="text-white small fw-semibold text-uppercase">Open Campus Events</span>
                     <h3 class="fw-bold mb-0"><?php echo $total_campus_events; ?></h3>
                 </div>
                 <div class="stat-icon" style="background: rgba(245,158,11,0.12); color:#f59e0b;"><i class="bi bi-stars"></i></div>
@@ -99,7 +99,7 @@ require_once '../includes/header.php';
     </div>
 
     <?php if (empty($featured_events)): ?>
-        <div class="glass-card p-4 text-center text-muted">
+        <div class="glass-card p-4 text-center text-white">
             <i class="bi bi-calendar-x display-6 mb-2 d-block"></i>
             <p class="mb-0">No upcoming events scheduled at the moment. Check back soon!</p>
         </div>
@@ -122,17 +122,17 @@ require_once '../includes/header.php';
                         </div>
 
                         <h5 class="fw-bold mb-2"><?php echo htmlspecialchars($evt['title']); ?></h5>
-                        <p class="small text-muted mb-3 flex-grow-1 text-truncate-2">
+                        <p class="small text-white mb-3 flex-grow-1 text-truncate-2">
                             <?php echo htmlspecialchars($evt['description']); ?>
                         </p>
 
                         <div class="border-top pt-3 mt-auto" style="border-color: var(--border-soft) !important;">
-                            <div class="d-flex justify-content-between small text-muted mb-2">
+                            <div class="d-flex justify-content-between small text-white mb-2">
                                 <span><i class="bi bi-calendar3 me-1"></i><?php echo date('M d, Y', strtotime($evt['event_date'])); ?></span>
                                 <span><i class="bi bi-clock me-1"></i><?php echo date('h:i A', strtotime($evt['event_time'])); ?></span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="small text-muted"><i class="bi bi-person me-1"></i><?php echo $reg_count; ?>/<?php echo $evt['capacity']; ?> seats</span>
+                                <span class="small text-white"><i class="bi bi-person me-1"></i><?php echo $reg_count; ?>/<?php echo $evt['capacity']; ?> seats</span>
                                 <a href="event_details.php?id=<?php echo $evt['id']; ?>" class="btn btn-sm btn-nsbm-outline">
                                     Details <i class="bi bi-arrow-right ms-1"></i>
                                 </a>
