@@ -1,3 +1,8 @@
+<?php
+if (!isset($base_path)) {
+    $base_path = (file_exists('includes/footer.php') || (isset($is_root) && $is_root)) ? '' : '../';
+}
+?>
 </div>
 </div>
 
@@ -16,13 +21,13 @@
             <div class="col-md-6 text-center text-md-end">
                 <ul class="list-inline mb-0 small">
                     <li class="list-inline-item me-3">
-                        <a href="../index.php" class="text-white text-decoration-none" style="color: #ffffff !important;">Home</a>
+                        <a href="<?php echo $base_path; ?>index.php" class="text-white text-decoration-none" style="color: #ffffff !important;">Home</a>
                     </li>
                     <li class="list-inline-item me-3">
-                        <a href="../auth/login.php" class="text-white text-decoration-none" style="color: #ffffff !important;">Portal Login</a>
+                        <a href="<?php echo $base_path; ?>auth/login.php" class="text-white text-decoration-none" style="color: #ffffff !important;">Portal Login</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="../auth/register.php" class="text-white text-decoration-none" style="color: #ffffff !important;">Student Registration</a>
+                        <a href="<?php echo $base_path; ?>auth/register.php" class="text-white text-decoration-none" style="color: #ffffff !important;">Student Registration</a>
                     </li>
                 </ul>
             </div>
@@ -32,7 +37,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="../assets/js/main.js"></script>
+<script src="<?php echo $base_path; ?>assets/js/main.js"></script>
 
 </body>
 </html>

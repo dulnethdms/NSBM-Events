@@ -27,8 +27,9 @@ try {
   <title>Welcome to NSBM EventHub</title>
 
   <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="assets/css/custom.css">
-  <script src="assets/js/main.js" defer></script>
 </head>
 <body>
 
@@ -85,7 +86,7 @@ try {
     <img src="assets/images/Image2.jpeg" alt="Second photo" class="photo overlay-photo">
 </section>
 
-<main class="main-wrapper">
+<div class="main-wrapper">
   <div class="container">
 
     <section class="herosec">
@@ -186,14 +187,4 @@ try {
     <?php endif; ?>
       </div>
     </section>
-  </div>
-</main>
-
-<footer>
-  <div class="container">
-    <p>NSBM EventHub &copy; 2026 NSBM Green University. All rights reserved.</p>
-  </div>
-</footer>
-
-</body>
-</html>
+<?php require_once 'includes/footer.php'; ?>
