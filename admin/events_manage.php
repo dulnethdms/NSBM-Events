@@ -102,8 +102,8 @@ require_once '../includes/header.php';
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1"><i class="bi bi-calendar-event text-success me-2"></i>Manage Campus Events</h2>
-        <p class="text-muted small mb-0">Create, modify, and monitor event details & seating capacity</p>
+        <h2 class="fw-bold mb-1 text-white"><i class="bi bi-calendar-event text-success me-2"></i>Manage Campus Events</h2>
+        <p class="text-white small mb-0">Create, modify, and monitor event details & seating capacity</p>
     </div>
     <div>
         <?php if ($action === 'add' || $action === 'edit'): ?>
@@ -122,7 +122,7 @@ require_once '../includes/header.php';
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <div class="glass-card p-4 p-md-5">
-                <h4 class="fw-bold mb-4 text-dark">
+                <h4 class="fw-bold mb-4 text-white">
                     <i class="bi <?php echo $edit_event ? 'bi-pencil-square text-warning' : 'bi-plus-circle-fill text-success'; ?> me-2"></i>
                     <?php echo $edit_event ? 'Edit Event: ' . htmlspecialchars($edit_event['title']) : 'Publish New Campus Event'; ?>
                 </h4>
@@ -142,13 +142,13 @@ require_once '../includes/header.php';
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-8">
-                            <label for="title" class="form-label fw-semibold">Event Title</label>
+                            <label for="title" class="form-label fw-semibold text-white">Event Title</label>
                             <input type="text" name="title" id="title" class="form-control" placeholder="e.g. NSBM AI & Robotics Expo" value="<?php echo htmlspecialchars($_POST['title'] ?? $edit_event['title'] ?? ''); ?>" required>
                             <div class="invalid-feedback">Event title is required.</div>
                         </div>
 
                         <div class="col-md-4">
-                            <label for="category_id" class="form-label fw-semibold">Category</label>
+                            <label for="category_id" class="form-label fw-semibold text-white">Category</label>
                             <select name="category_id" id="category_id" class="form-select" required>
                                 <option value="">-- Select Category --</option>
                                 <?php foreach ($categories as $cat): ?>
@@ -162,26 +162,26 @@ require_once '../includes/header.php';
                     </div>
 
                     <div class="mb-3">
-                        <label for="description" class="form-label fw-semibold">Event Description</label>
+                        <label for="description" class="form-label fw-semibold text-white">Event Description</label>
                         <textarea name="description" id="description" rows="4" class="form-control" placeholder="Detailed description of schedule, prerequisites, and agenda..." required><?php echo htmlspecialchars($_POST['description'] ?? $edit_event['description'] ?? ''); ?></textarea>
                         <div class="invalid-feedback">Description is required.</div>
                     </div>
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-4">
-                            <label for="event_date" class="form-label fw-semibold">Date</label>
+                            <label for="event_date" class="form-label fw-semibold text-white">Date</label>
                             <input type="date" name="event_date" id="event_date" class="form-control" value="<?php echo htmlspecialchars($_POST['event_date'] ?? $edit_event['event_date'] ?? ''); ?>" required>
                             <div class="invalid-feedback">Please select event date.</div>
                         </div>
 
                         <div class="col-md-4">
-                            <label for="event_time" class="form-label fw-semibold">Time</label>
+                            <label for="event_time" class="form-label fw-semibold text-white">Time</label>
                             <input type="time" name="event_time" id="event_time" class="form-control" value="<?php echo htmlspecialchars($_POST['event_time'] ?? $edit_event['event_time'] ?? ''); ?>" required>
                             <div class="invalid-feedback">Please select event time.</div>
                         </div>
 
                         <div class="col-md-4">
-                            <label for="capacity" class="form-label fw-semibold">Seat Capacity</label>
+                            <label for="capacity" class="form-label fw-semibold text-white">Seat Capacity</label>
                             <input type="number" name="capacity" id="capacity" class="form-control" min="1" placeholder="50" value="<?php echo htmlspecialchars($_POST['capacity'] ?? $edit_event['capacity'] ?? 50); ?>" required>
                             <div class="invalid-feedback">Capacity must be greater than 0.</div>
                         </div>
@@ -189,13 +189,13 @@ require_once '../includes/header.php';
 
                     <div class="row g-3 mb-4">
                         <div class="col-md-8">
-                            <label for="venue" class="form-label fw-semibold">Venue / Location</label>
+                            <label for="venue" class="form-label fw-semibold text-white">Venue / Location</label>
                             <input type="text" name="venue" id="venue" class="form-control" placeholder="e.g. Auditorium B / Main Sports Complex" value="<?php echo htmlspecialchars($_POST['venue'] ?? $edit_event['venue'] ?? ''); ?>" required>
                             <div class="invalid-feedback">Venue is required.</div>
                         </div>
 
                         <div class="col-md-4">
-                            <label for="status" class="form-label fw-semibold">Status</label>
+                            <label for="status" class="form-label fw-semibold text-white">Status</label>
                             <select name="status" id="status" class="form-select" required>
                                 <?php foreach (['Upcoming', 'Ongoing', 'Completed', 'Cancelled'] as $st): ?>
                                     <option value="<?php echo $st; ?>" <?php echo (($_POST['status'] ?? $edit_event['status'] ?? 'Upcoming') === $st) ? 'selected' : ''; ?>><?php echo $st; ?></option>
@@ -217,23 +217,23 @@ require_once '../includes/header.php';
 <?php else: ?>
     <div class="glass-card p-4">
         <?php if (empty($events)): ?>
-            <div class="text-center py-5 text-muted">
+            <div class="text-center py-5 text-white">
                 <i class="bi bi-calendar-x display-4 mb-2"></i>
-                <h5>No events available</h5>
-                <p>Click "Create New Event" above to add your first campus event.</p>
+                <h5 class="text-white">No events available</h5>
+                <p class="text-white">Click "Create New Event" above to add your first campus event.</p>
             </div>
         <?php else: ?>
             <div class="table-responsive">
                 <table class="table table-custom">
                     <thead>
                         <tr class="text-muted small">
-                            <th>Event Details</th>
-                            <th>Category</th>
-                            <th>Date & Time</th>
-                            <th>Venue</th>
-                            <th>Capacity</th>
-                            <th>Status</th>
-                            <th class="text-end">Actions</th>
+                            <th style="color: #212529 !important;">Event Details</th>
+                            <th style="color: #212529 !important;">Category</th>
+                            <th style="color: #212529 !important;">Date & Time</th>
+                            <th style="color: #212529 !important;">Venue</th>
+                            <th style="color: #212529 !important;">Capacity</th>
+                            <th style="color: #212529 !important;">Status</th>
+                            <th class="text-end" style="color: #212529 !important;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -242,17 +242,17 @@ require_once '../includes/header.php';
                         ?>
                             <tr>
                                 <td>
-                                    <div class="fw-bold text-dark fs-6"><?php echo htmlspecialchars($evt['title']); ?></div>
-                                    <div class="small text-muted text-truncate" style="max-width: 260px;"><?php echo htmlspecialchars($evt['description']); ?></div>
+                                    <div class="fw-bold fs-6" style="color: #212529 !important;"><?php echo htmlspecialchars($evt['title']); ?></div>
+                                    <div class="small text-truncate" style="color: #495057 !important; max-width: 260px;"><?php echo htmlspecialchars($evt['description']); ?></div>
                                 </td>
                                 <td><span class="badge bg-light text-dark border"><?php echo htmlspecialchars($evt['category_name']); ?></span></td>
-                                <td class="small">
-                                    <i class="bi bi-calendar3 me-1 text-muted"></i><?php echo date('M d, Y', strtotime($evt['event_date'])); ?><br>
-                                    <i class="bi bi-clock me-1 text-muted"></i><?php echo date('h:i A', strtotime($evt['event_time'])); ?>
+                                <td class="small" style="color: #495057 !important;">
+                                    <i class="bi bi-calendar3 me-1" style="color: #6c757d !important;"></i><?php echo date('M d, Y', strtotime($evt['event_date'])); ?><br>
+                                    <i class="bi bi-clock me-1" style="color: #6c757d !important;"></i><?php echo date('h:i A', strtotime($evt['event_time'])); ?>
                                 </td>
-                                <td class="small"><i class="bi bi-geo-alt me-1 text-muted"></i><?php echo htmlspecialchars($evt['venue']); ?></td>
+                                <td class="small" style="color: #495057 !important;"><i class="bi bi-geo-alt me-1" style="color: #6c757d !important;"></i><?php echo htmlspecialchars($evt['venue']); ?></td>
                                 <td class="small fw-semibold">
-                                    <span class="<?php echo $registered_count >= $evt['capacity'] ? 'text-danger fw-bold' : 'text-dark'; ?>">
+                                    <span class="<?php echo $registered_count >= $evt['capacity'] ? 'text-danger fw-bold' : ''; ?>" <?php echo $registered_count < $evt['capacity'] ? 'style="color: #212529 !important;"' : ''; ?>>
                                         <?php echo $registered_count; ?> / <?php echo $evt['capacity']; ?>
                                     </span>
                                     <div class="progress progress-seat mt-1" style="width: 80px;">

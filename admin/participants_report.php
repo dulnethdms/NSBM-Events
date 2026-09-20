@@ -83,24 +83,24 @@ require_once '../includes/header.php';
         <div class="d-flex justify-content-between align-items-start">
             <div>
                 <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 mb-2"><?php echo htmlspecialchars($event['category_name']); ?></span>
-                <h2 class="fw-bold mb-1 text-dark"><?php echo htmlspecialchars($event['title']); ?></h2>
-                <p class="text-muted small mb-0"><i class="bi bi-geo-alt me-1"></i>Venue: <?php echo htmlspecialchars($event['venue']); ?></p>
+                <h2 class="fw-bold mb-1 text-white"><?php echo htmlspecialchars($event['title']); ?></h2>
+                <p class="text-white small mb-0"><i class="bi bi-geo-alt me-1"></i>Venue: <?php echo htmlspecialchars($event['venue']); ?></p>
             </div>
             <div class="text-end">
                 <span class="badge bg-dark rounded-pill px-3 py-2 fs-6 mb-1">
                     <?php echo count($participants); ?> / <?php echo $event['capacity']; ?> Registered
                 </span>
-                <div class="small text-muted">Status: <?php echo $event['status']; ?></div>
+                <div class="small text-white">Status: <?php echo $event['status']; ?></div>
             </div>
         </div>
-        <div class="row g-2 mt-3 small text-muted">
+        <div class="row g-2 mt-3 small text-white">
             <div class="col-sm-4"><i class="bi bi-calendar3 me-1"></i><strong>Date:</strong> <?php echo date('F d, Y', strtotime($event['event_date'])); ?></div>
             <div class="col-sm-4"><i class="bi bi-clock me-1"></i><strong>Time:</strong> <?php echo date('h:i A', strtotime($event['event_time'])); ?></div>
             <div class="col-sm-4"><i class="bi bi-person me-1"></i><strong>Organizer:</strong> <?php echo htmlspecialchars($event['creator_name']); ?></div>
         </div>
     </div>
 
-    <h5 class="fw-bold mb-3"><i class="bi bi-person-check-fill text-success me-2"></i>Registered Student Roster</h5>
+    <h5 class="fw-bold mb-3 text-white"><i class="bi bi-person-check-fill text-success me-2"></i>Registered Student Roster</h5>
 
     <?php if (empty($participants)): ?>
         <div class="alert alert-light text-center py-4 border rounded-3 text-muted">
@@ -133,7 +133,7 @@ require_once '../includes/header.php';
                 </tbody>
             </table>
         </div>
-        <div class="mt-3 text-muted small">
+        <div class="mt-3 text-white small">
             Report generated on <?php echo date('F d, Y - h:i A'); ?> via NSBM EventHub.
         </div>
     <?php endif; ?>

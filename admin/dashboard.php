@@ -32,11 +32,11 @@ require_once '../includes/header.php';
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1"><i class="bi bi-speedometer2 text-success me-2"></i>Admin Dashboard</h2>
-        <p class="text-muted small mb-0">Overview of university events, categories, and student registrations</p>
+        <h2 class="fw-bold mb-1 text-white"><i class="bi bi-speedometer2 text-success me-2"></i>Admin Dashboard</h2>
+        <p class="small mb-0 text-white" style="opacity: 0.9;">Overview of university events, categories, and student registrations</p>
     </div>
     <div>
-        <a href="events_manage.php?action=add" class="btn btn-nsbm shadow-sm">
+        <a href="events_manage.php?action=add" class="btn btn-nsbm shadow-sm text-white">
             <i class="bi bi-plus-circle me-1"></i> Create New Event
         </a>
     </div>
@@ -44,52 +44,52 @@ require_once '../includes/header.php';
 
 <div class="row g-3 mb-4">
     <div class="col-md-3 col-sm-6">
-        <div class="glass-card p-3 stat-card">
+        <div class="glass-card p-3 stat-card text-white">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small fw-semibold text-uppercase">Total Events</span>
-                    <h3 class="fw-bold mb-0 text-dark"><?php echo $total_events; ?></h3>
+                    <span class="small fw-semibold text-uppercase text-white">Total Events</span>
+                    <h3 class="fw-bold mb-0 text-white"><?php echo $total_events; ?></h3>
                 </div>
-                <div class="stat-icon">
+                <div class="stat-icon text-white">
                     <i class="bi bi-calendar-event"></i>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3 col-sm-6">
-        <div class="glass-card p-3 stat-card" style="border-left-color: #3b82f6;">
+        <div class="glass-card p-3 stat-card text-white" style="border-left-color: #3b82f6;">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small fw-semibold text-uppercase">Categories</span>
-                    <h3 class="fw-bold mb-0 text-dark"><?php echo $total_categories; ?></h3>
+                    <span class="small fw-semibold text-uppercase text-white">Categories</span>
+                    <h3 class="fw-bold mb-0 text-white"><?php echo $total_categories; ?></h3>
                 </div>
-                <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <div class="stat-icon text-white" style="background: rgba(59, 130, 246, 0.2);">
                     <i class="bi bi-tags"></i>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3 col-sm-6">
-        <div class="glass-card p-3 stat-card" style="border-left-color: #8b5cf6;">
+        <div class="glass-card p-3 stat-card text-white" style="border-left-color: #8b5cf6;">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small fw-semibold text-uppercase">Registrations</span>
-                    <h3 class="fw-bold mb-0 text-dark"><?php echo $total_registrations; ?></h3>
+                    <span class="small fw-semibold text-uppercase text-white">Registrations</span>
+                    <h3 class="fw-bold mb-0 text-white"><?php echo $total_registrations; ?></h3>
                 </div>
-                <div class="stat-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                <div class="stat-icon text-white" style="background: rgba(139, 92, 246, 0.2);">
                     <i class="bi bi-person-check"></i>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3 col-sm-6">
-        <div class="glass-card p-3 stat-card" style="border-left-color: #f59e0b;">
+        <div class="glass-card p-3 stat-card text-white" style="border-left-color: #f59e0b;">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small fw-semibold text-uppercase">Announcements</span>
-                    <h3 class="fw-bold mb-0 text-dark"><?php echo $total_announcements; ?></h3>
+                    <span class="small fw-semibold text-uppercase text-white">Announcements</span>
+                    <h3 class="fw-bold mb-0 text-white"><?php echo $total_announcements; ?></h3>
                 </div>
-                <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                <div class="stat-icon text-white" style="background: rgba(245, 158, 11, 0.2);">
                     <i class="bi bi-megaphone"></i>
                 </div>
             </div>
@@ -101,8 +101,8 @@ require_once '../includes/header.php';
     <div class="col-lg-8">
         <div class="glass-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold mb-0"><i class="bi bi-clock-history text-primary me-2"></i>Recently Added Events</h5>
-                <a href="events_manage.php" class="btn btn-sm btn-outline-secondary rounded-pill">View All</a>
+                <h5 class="fw-bold mb-0 text-white"><i class="bi bi-clock-history text-primary me-2"></i>Recently Added Events</h5>
+                <a href="events_manage.php" class="btn btn-sm btn-outline-light rounded-pill text-white">View All</a>
             </div>
 
             <?php if (empty($recent_events)): ?>
@@ -112,15 +112,15 @@ require_once '../includes/header.php';
                 </div>
             <?php else: ?>
                 <div class="table-responsive">
-                    <table class="table table-custom">
+                    <table class="table table-custom align-middle">
                         <thead>
                             <tr class="text-muted small">
-                                <th>Event Title</th>
-                                <th>Category</th>
-                                <th>Date & Time</th>
-                                <th>Capacity</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th style="color: #212529 !important;">Event Title</th>
+                                <th style="color: #212529 !important;">Category</th>
+                                <th style="color: #212529 !important;">Date & Time</th>
+                                <th style="color: #212529 !important;">Capacity</th>
+                                <th style="color: #212529 !important;">Status</th>
+                                <th style="color: #212529 !important;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,13 +128,13 @@ require_once '../includes/header.php';
                                 $registered_count = get_event_registration_count($pdo, $evt['id']);
                             ?>
                                 <tr>
-                                    <td class="fw-bold text-dark"><?php echo htmlspecialchars($evt['title']); ?></td>
+                                    <td class="fw-bold" style="color: #212529 !important;"><?php echo htmlspecialchars($evt['title']); ?></td>
                                     <td><span class="badge bg-light text-dark border"><?php echo htmlspecialchars($evt['category_name']); ?></span></td>
-                                    <td class="small text-muted">
+                                    <td class="small" style="color: #495057 !important;">
                                         <?php echo date('M d, Y', strtotime($evt['event_date'])); ?><br>
-                                        <span class="text-xs"><?php echo date('h:i A', strtotime($evt['event_time'])); ?></span>
+                                        <span class="text-xs text-muted"><?php echo date('h:i A', strtotime($evt['event_time'])); ?></span>
                                     </td>
-                                    <td class="small fw-semibold">
+                                    <td class="small fw-semibold" style="color: #212529 !important;">
                                         <?php echo $registered_count; ?> / <?php echo $evt['capacity']; ?> seats
                                     </td>
                                     <td><?php echo get_status_badge($evt['status']); ?></td>
@@ -156,36 +156,36 @@ require_once '../includes/header.php';
     </div>
 
     <div class="col-lg-4">
-        <div class="glass-card p-4 h-100">
-            <h5 class="fw-bold mb-3"><i class="bi bi-sliders text-success me-2"></i>Quick Management</h5>
+        <div class="glass-card p-4 h-100 text-white">
+            <h5 class="fw-bold mb-3 text-white"><i class="bi bi-sliders text-success me-2"></i>Quick Management</h5>
             <div class="d-grid gap-2">
-                <a href="events_manage.php" class="btn btn-light border text-start p-3 rounded-3 d-flex align-items-center justify-content-between">
+                <a href="events_manage.php" class="btn btn-dark border text-start p-3 rounded-3 d-flex align-items-center justify-content-between text-white">
                     <div>
-                        <div class="fw-bold text-dark">Manage All Events</div>
-                        <div class="small text-muted">Create, edit venue, time, capacity</div>
+                        <div class="fw-bold text-white">Manage All Events</div>
+                        <div class="small text-white" style="opacity: 0.8;">Create, edit venue, time, capacity</div>
                     </div>
-                    <i class="bi bi-chevron-right text-muted"></i>
+                    <i class="bi bi-chevron-right text-white"></i>
                 </a>
-                <a href="categories_manage.php" class="btn btn-light border text-start p-3 rounded-3 d-flex align-items-center justify-content-between">
+                <a href="categories_manage.php" class="btn btn-dark border text-start p-3 rounded-3 d-flex align-items-center justify-content-between text-white">
                     <div>
-                        <div class="fw-bold text-dark">Manage Categories</div>
-                        <div class="small text-muted">Organize events by faculty & topic</div>
+                        <div class="fw-bold text-white">Manage Categories</div>
+                        <div class="small text-white" style="opacity: 0.8;">Organize events by faculty & topic</div>
                     </div>
-                    <i class="bi bi-chevron-right text-muted"></i>
+                    <i class="bi bi-chevron-right text-white"></i>
                 </a>
-                <a href="registrations_view.php" class="btn btn-light border text-start p-3 rounded-3 d-flex align-items-center justify-content-between">
+                <a href="registrations_view.php" class="btn btn-dark border text-start p-3 rounded-3 d-flex align-items-center justify-content-between text-white">
                     <div>
-                        <div class="fw-bold text-dark">View Student Signups</div>
-                        <div class="small text-muted">Inspect rosters and download reports</div>
+                        <div class="fw-bold text-white">View Student Signups</div>
+                        <div class="small text-white" style="opacity: 0.8;">Inspect rosters and download reports</div>
                     </div>
-                    <i class="bi bi-chevron-right text-muted"></i>
+                    <i class="bi bi-chevron-right text-white"></i>
                 </a>
-                <a href="announcements_manage.php" class="btn btn-light border text-start p-3 rounded-3 d-flex align-items-center justify-content-between">
+                <a href="announcements_manage.php" class="btn btn-dark border text-start p-3 rounded-3 d-flex align-items-center justify-content-between text-white">
                     <div>
-                        <div class="fw-bold text-dark">Broadcast Announcements</div>
-                        <div class="small text-muted">Post global or event news notices</div>
+                        <div class="fw-bold text-white">Broadcast Announcements</div>
+                        <div class="small text-white" style="opacity: 0.8;">Post global or event news notices</div>
                     </div>
-                    <i class="bi bi-chevron-right text-muted"></i>
+                    <i class="bi bi-chevron-right text-white"></i>
                 </a>
             </div>
         </div>

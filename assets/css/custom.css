@@ -362,8 +362,8 @@ footer p {
 }
 
 .navbar-brand-badge {
-    background: var(--nsbm-accent);
-    color: #fff;
+    background: #fff;
+    color: var(--nsbm-accent);
     font-weight: 800;
     font-size: 0.85rem;
     padding: 0.3rem 0.7rem;

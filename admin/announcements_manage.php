@@ -85,15 +85,15 @@ require_once '../includes/header.php';
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1"><i class="bi bi-megaphone text-warning me-2"></i>Campus Announcements</h2>
-        <p class="text-muted small mb-0">Broadcast notices globally to all students or target specific campus events</p>
+        <h2 class="fw-bold mb-1 text-white"><i class="bi bi-megaphone text-warning me-2"></i>Campus Announcements</h2>
+        <p class="text-white small mb-0">Broadcast notices globally to all students or target specific campus events</p>
     </div>
 </div>
 
 <div class="row g-4 mb-4">
     <div class="col-md-5">
         <div class="glass-card p-4">
-            <h5 class="fw-bold mb-3">
+            <h5 class="fw-bold mb-3 text-white">
                 <i class="bi <?php echo $edit_announcement ? 'bi-pencil-square text-warning' : 'bi-plus-circle-fill text-success'; ?> me-2"></i>
                 <?php echo $edit_announcement ? 'Edit Announcement' : 'Post New Notice'; ?>
             </h5>
@@ -112,13 +112,13 @@ require_once '../includes/header.php';
                 <input type="hidden" name="announcement_id" value="<?php echo $edit_announcement['id'] ?? 0; ?>">
 
                 <div class="mb-3">
-                    <label for="title" class="form-label fw-semibold">Notice Title</label>
+                    <label for="title" class="form-label fw-semibold text-white">Notice Title</label>
                     <input type="text" name="title" id="title" class="form-control" placeholder="e.g. Schedule change for Hackathon" value="<?php echo htmlspecialchars($_POST['title'] ?? $edit_announcement['title'] ?? ''); ?>" required>
                     <div class="invalid-feedback">Title is required.</div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="event_id" class="form-label fw-semibold">Link to Specific Event (Optional)</label>
+                    <label for="event_id" class="form-label fw-semibold text-white">Link to Specific Event (Optional)</label>
                     <select name="event_id" id="event_id" class="form-select">
                         <option value="">-- General Campus Notice (All Students) --</option>
                         <?php foreach ($events as $evt): ?>
@@ -127,11 +127,11 @@ require_once '../includes/header.php';
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <div class="form-text">If unselected, the notice will appear globally on the student feed.</div>
+                    <div class="form-text text-white">If unselected, the notice will appear globally on the student feed.</div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="content" class="form-label fw-semibold">Announcement Content</label>
+                    <label for="content" class="form-label fw-semibold text-white">Announcement Content</label>
                     <textarea name="content" id="content" rows="4" class="form-control" placeholder="Detailed notification content..." required><?php echo htmlspecialchars($_POST['content'] ?? $edit_announcement['content'] ?? ''); ?></textarea>
                     <div class="invalid-feedback">Content body is required.</div>
                 </div>
@@ -150,16 +150,16 @@ require_once '../includes/header.php';
 
     <div class="col-md-7">
         <div class="glass-card p-4">
-            <h5 class="fw-bold mb-3"><i class="bi bi-list-ul me-2 text-primary"></i>Posted Announcements</h5>
+            <h5 class="fw-bold mb-3 text-white"><i class="bi bi-list-ul me-2 text-primary"></i>Posted Announcements</h5>
 
             <?php if (empty($announcements)): ?>
-                <p class="text-muted text-center py-4">No announcements posted yet.</p>
+                <p class="text-white text-center py-4">No announcements posted yet.</p>
             <?php else: ?>
                 <div class="d-grid gap-3">
                     <?php foreach ($announcements as $ann): ?>
                         <div class="p-3 border rounded-3 bg-white shadow-sm">
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h6 class="fw-bold text-dark mb-0"><?php echo htmlspecialchars($ann['title']); ?></h6>
+                                <h6 class="fw-bold mb-0" style="color: #212529 !important;"><?php echo htmlspecialchars($ann['title']); ?></h6>
                                 <div class="btn-group">
                                     <a href="announcements_manage.php?action=edit&id=<?php echo $ann['id']; ?>" class="btn btn-sm btn-light border me-1" title="Edit">
                                         <i class="bi bi-pencil"></i>
@@ -170,7 +170,7 @@ require_once '../includes/header.php';
                                 </div>
                             </div>
 
-                            <p class="small text-secondary mb-2"><?php echo htmlspecialchars($ann['content']); ?></p>
+                            <p class="small mb-2" style="color: #495057 !important;"><?php echo htmlspecialchars($ann['content']); ?></p>
 
                             <div class="d-flex justify-content-between align-items-center small text-muted border-top pt-2 mt-2">
                                 <span>

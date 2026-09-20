@@ -81,7 +81,7 @@ require_once '../includes/header.php';
 <div class="row g-4 mb-4">
     <div class="col-md-5">
         <div class="glass-card p-4">
-            <h5 class="fw-bold mb-3">
+            <h5 class="fw-bold mb-3 text-white">
                 <i class="bi <?php echo $edit_category ? 'bi-pencil-square text-warning' : 'bi-plus-circle-fill text-success'; ?> me-2"></i>
                 <?php echo $edit_category ? 'Edit Category' : 'Create New Category'; ?>
             </h5>
@@ -100,13 +100,13 @@ require_once '../includes/header.php';
                 <input type="hidden" name="category_id" value="<?php echo $edit_category['id'] ?? 0; ?>">
 
                 <div class="mb-3">
-                    <label for="name" class="form-label fw-semibold">Category Name</label>
+                    <label for="name" class="form-label fw-semibold text-white">Category Name</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="e.g. IT & Software" value="<?php echo htmlspecialchars($_POST['name'] ?? $edit_category['name'] ?? ''); ?>" required>
                     <div class="invalid-feedback">Category name is required.</div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="description" class="form-label fw-semibold">Description (Optional)</label>
+                    <label for="description" class="form-label fw-semibold text-white">Description (Optional)</label>
                     <textarea name="description" id="description" rows="3" class="form-control" placeholder="Brief details about what events belong here..."><?php echo htmlspecialchars($_POST['description'] ?? $edit_category['description'] ?? ''); ?></textarea>
                 </div>
 
@@ -124,26 +124,26 @@ require_once '../includes/header.php';
 
     <div class="col-md-7">
         <div class="glass-card p-4">
-            <h5 class="fw-bold mb-3"><i class="bi bi-tags text-primary me-2"></i>Existing Categories</h5>
+            <h5 class="fw-bold mb-3 text-white"><i class="bi bi-tags text-primary me-2"></i>Existing Categories</h5>
 
             <?php if (empty($categories)): ?>
-                <p class="text-muted text-center py-4">No categories defined yet.</p>
+                <p class="text-white text-center py-4">No categories defined yet.</p>
             <?php else: ?>
                 <div class="table-responsive">
                     <table class="table table-custom">
                         <thead>
                             <tr class="text-muted small">
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Total Events</th>
-                                <th class="text-end">Actions</th>
+                                <th style="color: #212529 !important;">Name</th>
+                                <th style="color: #212529 !important;">Description</th>
+                                <th style="color: #212529 !important;">Total Events</th>
+                                <th class="text-end" style="color: #212529 !important;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($categories as $cat): ?>
                                 <tr>
-                                    <td class="fw-bold text-dark"><?php echo htmlspecialchars($cat['name']); ?></td>
-                                    <td class="small text-muted"><?php echo htmlspecialchars($cat['description'] ?: 'No description'); ?></td>
+                                    <td class="fw-bold" style="color: #212529 !important;"><?php echo htmlspecialchars($cat['name']); ?></td>
+                                    <td class="small" style="color: #495057 !important;"><?php echo htmlspecialchars($cat['description'] ?: 'No description'); ?></td>
                                     <td><span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 px-2 py-1"><?php echo $cat['event_count']; ?> events</span></td>
                                     <td class="text-end">
                                         <a href="categories_manage.php?action=edit&id=<?php echo $cat['id']; ?>" class="btn btn-sm btn-light border me-1">
