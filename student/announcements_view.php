@@ -31,7 +31,7 @@ require_once '../includes/header.php';
 </div>
 
 <?php if (empty($announcements)): ?>
-    <div class="glass-card p-5 text-center text-muted my-4">
+    <div class="glass-card p-5 text-center text-white my-4">
         <i class="bi bi-bell-slash display-4 mb-3 d-block text-secondary"></i>
         <h5>No announcements posted yet</h5>
         <p class="small mb-0">Check back later for university updates and event news.</p>
@@ -55,11 +55,11 @@ require_once '../includes/header.php';
                             <?php endif; ?>
                         </div>
 
-                        <p class="text-muted mb-3 fs-6" style="white-space: pre-line; line-height: 1.6;">
+                        <p class="text-white mb-3 fs-6" style="white-space: pre-line; line-height: 1.6;">
                             <?php echo htmlspecialchars($ann['content']); ?>
                         </p>
 
-                        <div class="d-flex justify-content-between align-items-center pt-3 text-muted small" style="border-top: 1px solid var(--border-soft);">
+                        <div class="d-flex justify-content-between align-items-center pt-3 text-white small" style="border-top: 1px solid var(--border-soft);">
                             <span><i class="bi bi-person me-1"></i>Posted by <strong><?php echo htmlspecialchars($ann['author_name']); ?></strong></span>
                             <span><i class="bi bi-clock me-1"></i><?php echo date('F d, Y - h:i A', strtotime($ann['created_at'])); ?></span>
                         </div>
