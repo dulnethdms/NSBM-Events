@@ -91,7 +91,7 @@ require_once '../includes/header.php';
 
                         <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center small mb-1">
-                                <span class="fw-semibold text-muted">Availability</span>
+                                <span class="fw-semibold text-white">Availability</span>
                                 <span class="fw-bold <?php echo $is_full ? 'text-danger' : 'text-success'; ?>"><?php echo $reg_count; ?>/<?php echo $evt['capacity']; ?> seats</span>
                             </div>
                             <div class="progress progress-seat">
