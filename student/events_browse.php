@@ -28,7 +28,7 @@ require_once '../includes/header.php';
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h2 class="fw-bold mb-1"><i class="bi bi-compass text-success me-2"></i>Browse Campus Events</h2>
-        <p class="text-muted small mb-0">Discover workshops, sports events, and cultural festivals happening around campus</p>
+        <p class="text-muted small mb-0 text-white">Discover workshops, sports events, and cultural festivals happening around campus</p>
     </div>
 </div>
 
