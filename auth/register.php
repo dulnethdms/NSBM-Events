@@ -137,7 +137,7 @@ require_once '../includes/header.php';
                 </button>
 
                 <div class="text-center">
-                    <span class="text-muted small">Already have an account?</span>
+                    <span class="text-white small">Already have an account?</span>
                     <a href="login.php" class="small fw-bold text-success text-decoration-none ms-1">Log In Here</a>
                 </div>
             </form>
