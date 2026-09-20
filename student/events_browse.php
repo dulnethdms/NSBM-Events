@@ -80,14 +80,14 @@ require_once '../includes/header.php';
                     </div>
 
                     <h5 class="fw-bold mb-2"><?php echo htmlspecialchars($evt['title']); ?></h5>
-                    <p class="small text-muted mb-3 flex-grow-1" style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">
+                    <p class="small text-white mb-3 flex-grow-1" style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">
                         <?php echo htmlspecialchars($evt['description']); ?>
                     </p>
 
                     <div class="border-top pt-3 mt-auto" style="border-color: var(--border-soft) !important;">
-                        <div class="small text-muted mb-1"><i class="bi bi-calendar3 me-2 text-success"></i><?php echo date('F d, Y', strtotime($evt['event_date'])); ?></div>
-                        <div class="small text-muted mb-1"><i class="bi bi-clock me-2 text-success"></i><?php echo date('h:i A', strtotime($evt['event_time'])); ?></div>
-                        <div class="small text-muted mb-3"><i class="bi bi-geo-alt me-2 text-success"></i><?php echo htmlspecialchars($evt['venue']); ?></div>
+                        <div class="small text-white mb-1"><i class="bi bi-calendar3 me-2 text-success"></i><?php echo date('F d, Y', strtotime($evt['event_date'])); ?></div>
+                        <div class="small text-white mb-1"><i class="bi bi-clock me-2 text-success"></i><?php echo date('h:i A', strtotime($evt['event_time'])); ?></div>
+                        <div class="small text-white mb-3"><i class="bi bi-geo-alt me-2 text-success"></i><?php echo htmlspecialchars($evt['venue']); ?></div>
 
                         <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center small mb-1">
