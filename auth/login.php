@@ -64,7 +64,7 @@ require_once '../includes/header.php';
             <div class="text-center mb-4">
                 <span class="navbar-brand-badge display-6 mb-2 d-inline-block"><i class="bi bi-box-arrow-in-right me-1"></i></span>
                 <h3 class="fw-bold">Sign In to EventHub</h3>
-                <p class="text-muted small">Enter your university credentials to continue</p>
+                <p class="text-white small">Enter your university credentials to continue</p>
             </div>
 
             <?php if (!empty($errors)): ?>

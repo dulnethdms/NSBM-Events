@@ -82,7 +82,7 @@ require_once '../includes/header.php';
             <div class="text-center mb-4">
                 <span class="navbar-brand-badge display-6 mb-2 d-inline-block"><i class="bi bi-person-plus-fill me-1"></i></span>
                 <h3 class="fw-bold">Create an Account</h3>
-                <p class="text-muted small">Join NSBM EventHub to participate or host campus events</p>
+                <p class="text-white small">Join NSBM EventHub to participate or host campus events</p>
             </div>
 
             <?php if (!empty($errors)): ?>

@@ -110,7 +110,7 @@ try {
     <section class="browse-events">
       <div class="section-header">
         <h2>Browse Campus Events</h2>
-        <p class="text-muted small">Explore upcoming workshops, sports events, and cultural festivals</p>
+        <p class="text-white small">Explore upcoming workshops, sports events, and cultural festivals</p>
       </div>
       <div class="event-cards">
         <div class="event-card">
@@ -118,7 +118,6 @@ try {
           <div class="event-card-body">
             <h5 class="event-card-title">NSBM Hackathon 2026</h5>
             <p class="event-card-text">Join the annual coding marathon and showcase your programming skills. Compete for prizes and recognition!</p>
-            <a href="<?php echo isset($_SESSION['user_id']) ? ($_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php') : 'auth/login.php'; ?>" class="btn">Browse Events</a>
           </div>
         </div>
         <div class="event-card">
@@ -126,7 +125,6 @@ try {
           <div class="event-card-body">
             <h5 class="event-card-title">Sports Championship 2026</h5>
             <p class="event-card-text">Cheer for your favorite teams in the inter-college sports championship. Reserve your seats for the finals now!</p>
-            <a href="<?php echo isset($_SESSION['user_id']) ? ($_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php') : 'auth/login.php'; ?>" class="btn">Browse Events</a>
           </div>
         </div>
         <div class="event-card">
@@ -134,7 +132,6 @@ try {
           <div class="event-card-body">
             <h5 class="event-card-title">Cultural Festival 2026</h5>
             <p class="event-card-text">Experience the vibrant cultural festival with music, dance, and food from around the world. Reserve your spot today!</p>
-            <a href="<?php echo isset($_SESSION['user_id']) ? ($_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php') : 'auth/login.php'; ?>" class="btn">Browse Events</a>
           </div>
         </div>
       </div>
@@ -144,8 +141,12 @@ try {
       <a href="<?php echo isset($_SESSION['user_id']) ? ($_SESSION['user_role'] === 'admin' ? 'admin/events_manage.php' : 'student/events_browse.php') : 'auth/login.php'; ?>" class="btn">See All Events</a>
     </div>
 
-    <section class="announcements-section">
-      <h3 class="mb-4"><i class="bi bi-megaphone-fill text-warning me-2"></i> Recent Announcements</h3>
+    <div class="section-header mt-5">
+      <h2>Recent Announcements</h2>
+      <p class="text-white small">Stay updated with the latest campus news, notices, and updates</p>
+    </div>
+
+    <section class="announcements-section mt-0">
       <div class="announcement-grid">
     <?php if (empty($announcements)): ?>
         <div class="announcement-card text-muted text-center py-4">
