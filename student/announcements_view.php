@@ -26,7 +26,7 @@ require_once '../includes/header.php';
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h2 class="fw-bold mb-1"><i class="bi bi-bell-fill text-warning me-2"></i>Campus Notices & Announcements</h2>
-        <p class="text-muted small mb-0">Stay updated on important news, timetable changes, and event updates</p>
+        <p class="text-white small mb-0">Stay updated on important news, timetable changes, and event updates</p>
     </div>
 </div>
 
@@ -34,7 +34,7 @@ require_once '../includes/header.php';
     <div class="glass-card p-5 text-center text-muted my-4">
         <i class="bi bi-bell-slash display-4 mb-3 d-block text-secondary"></i>
         <h5>No announcements posted yet</h5>
-        <p class="small mb-0">Check back later for university updates and event news.</p>
+        <p class="text-white small mb-0">Check back later for university updates and event news.</p>
     </div>
 <?php else: ?>
     <div class="row justify-content-center">

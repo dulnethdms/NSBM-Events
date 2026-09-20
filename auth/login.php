@@ -101,7 +101,7 @@ require_once '../includes/header.php';
                 </button>
 
                 <div class="text-center">
-                    <span class="text-muted small">Don't have an account yet?</span>
+                    <span class="text-white small">Don't have an account yet?</span>
                     <a href="register.php" class="small fw-bold text-success text-decoration-none ms-1">Register Now</a>
                 </div>
             </form>
