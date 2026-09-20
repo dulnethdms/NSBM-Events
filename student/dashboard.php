@@ -28,7 +28,7 @@ try {
         SELECT e.*, c.name AS category_name
         FROM events e
         JOIN categories c ON e.category_id = c.id
-        WHERE e.status = 'Upcoming' AND e.event_date >= CURDATE()
+        WHERE e.status = 'Upcoming'
         ORDER BY e.event_date ASC, e.event_time ASC
         LIMIT 3
     ");
